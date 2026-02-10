@@ -26,6 +26,7 @@
             --blanco: #ffffff;
             --verde: #10b981;
             --rojo: #ef4444;
+            --amarillo: #f59e0b;
             --sombra: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --sombra-fuerte: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             --radio: 8px;
@@ -377,7 +378,7 @@
             padding: 24px;
         }
 
-        /* Búsqueda */
+        /* Búsqueda y Filtros */
         .search-container {
             display: flex;
             gap: 16px;
@@ -414,6 +415,34 @@
             transform: translateY(-2px);
         }
 
+        .filters-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--azul-medio);
+            background: #eff6ff;
+        }
+
+        .filter-btn.active {
+            border-color: var(--azul-medio);
+            background: var(--azul-medio);
+            color: white;
+        }
+
         /* Botones principales */
         .btn-main {
             padding: 14px 28px;
@@ -442,6 +471,11 @@
             color: white;
         }
 
+        .btn-main.warning {
+            background: linear-gradient(135deg, var(--amarillo) 0%, #d97706 100%);
+            color: white;
+        }
+
         .btn-main:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -453,6 +487,7 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 24px;
             margin-top: 30px;
+            min-height: 400px;
         }
 
         .image-card {
@@ -464,6 +499,7 @@
             border: 1px solid #e5e7eb;
             position: relative;
             cursor: pointer;
+            animation: fadeIn 0.5s ease;
         }
 
         .image-card:hover {
@@ -475,6 +511,7 @@
             position: relative;
             overflow: hidden;
             height: 200px;
+            background: #f8fafc;
         }
 
         .image-container img {
@@ -486,6 +523,18 @@
 
         .image-card:hover .image-container img {
             transform: scale(1.05);
+        }
+
+        .image-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
         }
 
         .image-overlay {
@@ -580,6 +629,76 @@
             font-size: 16px;
         }
 
+        /* Paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover {
+            border-color: var(--azul-medio);
+            background: #eff6ff;
+        }
+
+        .pagination-btn.active {
+            border-color: var(--azul-medio);
+            background: var(--azul-medio);
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            margin: 0 16px;
+            font-size: 14px;
+            color: var(--gris-medio);
+        }
+
+        /* Gestión de almacenamiento */
+        .storage-info {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .storage-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .storage-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--verde), var(--azul-medio));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
         /* Estadísticas */
         .stats-grid {
             display: grid;
@@ -614,7 +733,7 @@
             opacity: 0.9;
         }
 
-        /* EDITOR DE IMÁGENES AVANZADO - NUEVO ESTILO */
+        /* EDITOR DE IMÁGENES AVANZADO */
         .advanced-editor-container {
             background: white;
             border-radius: 16px;
@@ -631,7 +750,7 @@
         }
 
         .editor-tools-sidebar {
-            width: 280px;
+            width: 300px;
             background-color: #132135;
             border-right: 1px solid #2a4a7a;
             padding: 25px 20px;
@@ -698,6 +817,66 @@
             color: #4a9eff;
         }
 
+        /* Controles de Rotación y Zoom */
+        .editor-transform-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .editor-control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .editor-control-label {
+            display: flex;
+            justify-content: space-between;
+            color: #c0d6ff;
+            font-size: 0.85rem;
+        }
+
+        .editor-control-value {
+            color: #4a9eff;
+            font-weight: 600;
+        }
+
+        .editor-control-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .editor-control-btn {
+            background-color: #1a3a5f;
+            border: 1px solid #2a4a7a;
+            color: #c0d6ff;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .editor-control-btn:hover {
+            background-color: #2a4a7a;
+            border-color: #4a9eff;
+        }
+
+        .editor-control-btn.zoom-in {
+            grid-column: 1 / 3;
+        }
+
+        .editor-control-btn.zoom-out {
+            grid-column: 3 / 5;
+        }
+
         .editor-adjustments {
             display: flex;
             flex-direction: column;
@@ -748,6 +927,78 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
+        /* Controles de Herramientas Específicas */
+        .editor-tool-options {
+            background-color: #1a3a5f;
+            border: 1px solid #2a4a7a;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .editor-tool-options.active {
+            display: block;
+        }
+
+        .editor-tool-option-group {
+            margin-bottom: 15px;
+        }
+
+        .editor-tool-option-label {
+            color: #c0d6ff;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .editor-tool-option-input {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #0c1a2d;
+            border: 1px solid #2a4a7a;
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 0.85rem;
+        }
+
+        .editor-color-picker {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #2a4a7a;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #4a9eff;
+        }
+
+        .editor-line-width-selector {
+            display: flex;
+            gap: 8px;
+        }
+
+        .editor-line-width-option {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #2a4a7a;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: #0c1a2d;
+            color: #c0d6ff;
+        }
+
+        .editor-line-width-option.active {
+            border-color: #4a9eff;
+            background-color: #2a4a7a;
+        }
+
+        .editor-font-size-selector {
+            width: 100%;
+        }
+
+        /* Área de Trabajo */
         .editor-workspace {
             flex: 1;
             display: flex;
@@ -788,14 +1039,67 @@
             object-fit: contain;
             transition: filter 0.3s, transform 0.3s;
             display: none;
+            transform-origin: center center;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .editor-canvas-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            cursor: crosshair;
+            display: none;
+        }
+
+        .editor-canvas-overlay.active {
+            display: block;
+        }
+
+        .editor-drawing-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .editor-text-input {
+            position: absolute;
+            background: transparent;
+            border: 2px dashed #4a9eff;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            padding: 5px;
+            min-width: 100px;
+            min-height: 30px;
+            outline: none;
+            resize: both;
+            overflow: hidden;
+            z-index: 20;
+            display: none;
+            background-color: rgba(12, 26, 45, 0.8);
+            pointer-events: auto;
         }
 
         .editor-crop-overlay {
             position: absolute;
             border: 2px dashed #4a9eff;
             box-shadow: 0 0 0 9999px rgba(12, 26, 45, 0.7);
-            display: none;
             cursor: move;
+            z-index: 15;
+            display: none;
+            pointer-events: auto;
+        }
+
+        .editor-crop-overlay.active {
+            display: block;
         }
 
         .editor-crop-handle {
@@ -805,6 +1109,7 @@
             background-color: #4a9eff;
             border: 2px solid #0c1a2d;
             border-radius: 2px;
+            pointer-events: auto;
         }
 
         .editor-crop-handle.nw { top: -6px; left: -6px; cursor: nw-resize; }
@@ -815,6 +1120,18 @@
         .editor-zoom-info {
             position: absolute;
             bottom: 15px;
+            right: 15px;
+            background-color: rgba(12, 26, 45, 0.8);
+            color: #c0d6ff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .editor-rotation-info {
+            position: absolute;
+            top: 15px;
             right: 15px;
             background-color: rgba(12, 26, 45, 0.8);
             color: #c0d6ff;
@@ -869,7 +1186,7 @@
             box-shadow: 0 6px 14px rgba(74, 158, 255, 0.4);
         }
 
-        /* Subida de imágenes */
+        /* ========== SUBIDA DE IMÁGENES MEJORADA ========== */
         .upload-container {
             background: white;
             border-radius: 16px;
@@ -885,11 +1202,18 @@
             background: #f8fafc;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .upload-dropzone:hover {
             border-color: var(--azul-medio);
             background: #eff6ff;
+        }
+
+        .upload-dropzone.dragover {
+            border-color: var(--azul-medio);
+            background: #eff6ff;
+            transform: scale(1.02);
         }
 
         .upload-icon {
@@ -910,8 +1234,21 @@
             margin-bottom: 24px;
         }
 
+        .upload-hint {
+            font-size: 14px;
+            color: var(--gris-claro);
+            margin-top: 15px;
+        }
+
+        .upload-hint i {
+            color: var(--azul-medio);
+            margin-right: 5px;
+        }
+
         .file-list {
             margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         .file-item {
@@ -923,6 +1260,98 @@
             border: 1px solid #e5e7eb;
             border-radius: 12px;
             margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .file-item.uploading {
+            background: #f0f9ff;
+            border-color: #bae6fd;
+        }
+
+        .file-item.success {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .file-item.error {
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+
+        .file-progress {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--azul-medio), var(--azul-profundo));
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .file-status {
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .file-status.uploading {
+            color: var(--azul-medio);
+        }
+
+        .file-status.success {
+            color: var(--verde);
+        }
+
+        .file-status.error {
+            color: var(--rojo);
+        }
+
+        /* Botones de acción en subida */
+        .upload-action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .upload-action-buttons .btn {
+            width: auto;
+            min-width: 150px;
+        }
+
+        .batch-upload-info {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .batch-upload-info h4 {
+            margin-bottom: 8px;
+            color: var(--azul-profundo);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .upload-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 13px;
         }
 
         /* Footer */
@@ -1033,6 +1462,46 @@
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Modal de confirmación */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2002;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-modal-content {
+            background-color: white;
+            border-radius: 16px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .confirm-modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--gris-oscuro);
+        }
+
+        .confirm-modal-message {
+            margin-bottom: 25px;
+            color: var(--gris-medio);
+        }
+
+        .confirm-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
         }
 
         /* Utilidades */
@@ -1254,29 +1723,59 @@
                             <input type="text" 
                                    id="searchInput" 
                                    class="search-input" 
-                                   placeholder="Buscar imágenes por nombre, etiqueta o descripción...">
+                                   placeholder="Buscar imágenes por nombre, etiqueta o descripción..."
+                                   onkeyup="debounceSearch()">
                             <button class="search-btn" onclick="searchImages()">
                                 <i class="fas fa-search"></i> Buscar
                             </button>
+                        </div>
+                        
+                        <div class="filters-container">
+                            <button class="filter-btn active" onclick="filterImages('all')">Todas</button>
+                            <button class="filter-btn" onclick="filterImages('edited')">Editadas</button>
+                            <button class="filter-btn" onclick="filterImages('recent')">Recientes</button>
+                            <button class="filter-btn" onclick="filterImages('large')">Grandes (>2MB)</button>
+                            <button class="filter-btn" onclick="filterImages('small')">Pequeñas (<1MB)</button>
                         </div>
                         
                         <button class="btn-main success" onclick="showPanel('upload')">
                             <i class="fas fa-plus"></i> Subir Nuevas Imágenes
                         </button>
                         
+                        <button class="btn-main warning" onclick="backupDatabase()" style="margin-left: 10px;">
+                            <i class="fas fa-download"></i> Respaldar Base de Datos
+                        </button>
+                        
                         <div class="gallery" id="imageGallery">
                             <!-- Imágenes se cargarán aquí -->
-                            <div class="empty-state">
-                                <div class="empty-icon">
-                                    <i class="fas fa-images"></i>
-                                </div>
-                                <h3 class="empty-title">No hay imágenes todavía</h3>
-                                <p class="empty-description">
-                                    Comience subiendo sus imágenes utilizando el botón "Subir imágenes"
-                                </p>
-                                <button class="btn-main success" onclick="showPanel('upload')">
-                                    <i class="fas fa-cloud-upload-alt"></i> Subir mis primeras imágenes
-                                </button>
+                        </div>
+                        
+                        <!-- Paginación -->
+                        <div class="pagination" id="paginationContainer">
+                            <button class="pagination-btn" onclick="changePage(currentPage - 1)" id="prevPageBtn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="pagination-info" id="pageInfo">Página 1 de 1</div>
+                            <button class="pagination-btn" onclick="changePage(currentPage + 1)" id="nextPageBtn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Información de almacenamiento -->
+                        <div class="storage-info">
+                            <div id="storageText">
+                                <i class="fas fa-database"></i> 
+                                <strong>Almacenamiento:</strong> 
+                                <span id="storageUsed">0 MB</span> usados de 
+                                <span id="storageTotal">10 MB</span> disponibles
+                                (<span id="storagePercent">0%</span>)
+                            </div>
+                            <div class="storage-bar">
+                                <div class="storage-fill" id="storageFill" style="width: 0%"></div>
+                            </div>
+                            <div style="font-size: 12px; margin-top: 8px; color: var(--gris-medio);">
+                                <i class="fas fa-info-circle"></i> 
+                                El sistema puede almacenar hasta 10,000 imágenes (aprox. 10GB)
                             </div>
                         </div>
                     </div>
@@ -1301,6 +1800,14 @@
                     
                     <div class="stat-card">
                         <div class="stat-icon">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                        <div class="stat-value" id="editedImages">0</div>
+                        <div class="stat-label">Imágenes Editadas</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-value" id="activeUsers">1</div>
@@ -1309,7 +1816,7 @@
                 </div>
             </div>
 
-            <!-- ========== SUBIR IMÁGENES ========== -->
+            <!-- ========== SUBIR IMÁGENES MEJORADO ========== -->
             <div id="uploadPanel" class="panel hidden">
                 <div class="upload-container">
                     <h2 style="font-size: 28px; margin-bottom: 8px; color: var(--gris-oscuro);">
@@ -1326,6 +1833,9 @@
                         <div class="upload-text">
                             <h3>Arrastra y suelta tus imágenes aquí</h3>
                             <p>o haz clic para seleccionar archivos</p>
+                            <div class="upload-hint">
+                                <i class="fas fa-lightbulb"></i> Puedes seleccionar múltiples archivos a la vez
+                            </div>
                         </div>
                         <input type="file" 
                                id="fileInput" 
@@ -1334,16 +1844,28 @@
                                style="display: none;">
                     </div>
                     
+                    <div class="batch-upload-info">
+                        <h4><i class="fas fa-info-circle"></i> Subida por lotes</h4>
+                        <p>Puedes subir hasta <strong>50 imágenes</strong> simultáneamente. El sistema procesará cada archivo individualmente y mostrará el progreso en tiempo real.</p>
+                        <div class="upload-stats">
+                            <span id="selectedCount">0 archivos seleccionados</span>
+                            <span id="totalSizeInfo">Total: 0 MB</span>
+                        </div>
+                    </div>
+                    
                     <div class="file-list" id="fileList">
                         <!-- Archivos seleccionados aparecerán aquí -->
                     </div>
                     
-                    <div class="action-buttons">
-                        <button class="btn btn-outline" onclick="showPanel('dashboard')">
-                            <i class="fas fa-times"></i> Cancelar
+                    <div class="upload-action-buttons">
+                        <button class="btn btn-outline" onclick="clearFileList()">
+                            <i class="fas fa-times"></i> Limpiar lista
                         </button>
-                        <button class="btn btn-primary" onclick="uploadFiles()">
+                        <button class="btn btn-primary" onclick="uploadFiles()" id="uploadButton">
                             <i class="fas fa-upload"></i> Subir Imágenes
+                        </button>
+                        <button class="btn btn-outline" onclick="showPanel('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Volver
                         </button>
                     </div>
                 </div>
@@ -1386,6 +1908,56 @@
                                         <div>Ajustes (A)</div>
                                     </button>
                                 </div>
+
+                                <!-- Opciones de herramientas -->
+                                <div id="editorToolOptions" class="editor-tool-options">
+                                    <!-- Opciones se cargarán dinámicamente según la herramienta seleccionada -->
+                                </div>
+
+                                <!-- Controles de Rotación y Zoom -->
+                                <div class="editor-transform-controls">
+                                    <div class="editor-control-group">
+                                        <div class="editor-control-label">
+                                            <span>Rotación</span>
+                                            <span id="editorRotationValue" class="editor-control-value">0°</span>
+                                        </div>
+                                        <div class="editor-control-buttons">
+                                            <button class="editor-control-btn" onclick="rotateImageLeft()">
+                                                <i class="fas fa-undo"></i> 90°
+                                            </button>
+                                            <button class="editor-control-btn" onclick="rotateImageRight()">
+                                                <i class="fas fa-redo"></i> 90°
+                                            </button>
+                                            <button class="editor-control-btn" onclick="rotateImage180()">
+                                                <i class="fas fa-sync-alt"></i> 180°
+                                            </button>
+                                            <button class="editor-control-btn" onclick="resetRotation()">
+                                                <i class="fas fa-times"></i> 0°
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="editor-control-group">
+                                        <div class="editor-control-label">
+                                            <span>Zoom</span>
+                                            <span id="editorZoomValue" class="editor-control-value">100%</span>
+                                        </div>
+                                        <div class="editor-control-buttons">
+                                            <button class="editor-control-btn zoom-in" onclick="zoomIn()">
+                                                <i class="fas fa-search-plus"></i> Acercar
+                                            </button>
+                                            <button class="editor-control-btn zoom-out" onclick="zoomOut()">
+                                                <i class="fas fa-search-minus"></i> Alejar
+                                            </button>
+                                            <button class="editor-control-btn" onclick="zoomFit()">
+                                                <i class="fas fa-expand-alt"></i> Ajustar
+                                            </button>
+                                            <button class="editor-control-btn" onclick="resetZoom()">
+                                                <i class="fas fa-times"></i> 100%
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             
                             <div>
@@ -1397,7 +1969,7 @@
                                             <span id="editorBrightnessValue" class="editor-adjustment-value">100%</span>
                                         </div>
                                         <div class="editor-slider-container">
-                                            <input type="range" min="0" max="200" value="100" class="editor-slider" id="editorBrightnessSlider">
+                                            <input type="range" min="0" max="200" value="100" class="editor-slider" id="editorBrightnessSlider" oninput="updateBrightness(this.value)">
                                         </div>
                                     </div>
                                     <div class="editor-adjustment-item">
@@ -1406,7 +1978,7 @@
                                             <span id="editorContrastValue" class="editor-adjustment-value">100%</span>
                                         </div>
                                         <div class="editor-slider-container">
-                                            <input type="range" min="0" max="200" value="100" class="editor-slider" id="editorContrastSlider">
+                                            <input type="range" min="0" max="200" value="100" class="editor-slider" id="editorContrastSlider" oninput="updateContrast(this.value)">
                                         </div>
                                     </div>
                                 </div>
@@ -1425,6 +1997,9 @@
                                     </button>
                                 </div>
                                 <img id="editorImageDisplay" src="" alt="Imagen a editar">
+                                <canvas class="editor-drawing-canvas" id="editorDrawingCanvas"></canvas>
+                                <div class="editor-canvas-overlay" id="editorCanvasOverlay"></div>
+                                <textarea class="editor-text-input" id="editorTextInput" placeholder="Escribe tu texto aquí..."></textarea>
                                 <div class="editor-crop-overlay" id="editorCropOverlay">
                                     <div class="editor-crop-handle nw"></div>
                                     <div class="editor-crop-handle ne"></div>
@@ -1432,14 +2007,16 @@
                                     <div class="editor-crop-handle se"></div>
                                 </div>
                                 <div class="editor-zoom-info" id="editorZoomInfo">Zoom: 100%</div>
+                                <div class="editor-rotation-info" id="editorRotationInfo">Rotación: 0°</div>
                             </div>
                             
                             <div class="editor-action-panel">
                                 <button id="editorBackButton" class="editor-action-button editor-back-button">
                                     <i class="fas fa-arrow-left"></i> Volver
                                 </button>
-                                <button id="editorSaveButton" class="editor-action-button editor-save-button">
-                                    <i class="fas fa-save"></i> Guardar
+                                <!-- CORREGIDO: Se agregó onclick="saveEditedImage()" al botón Guardar Cambios -->
+                                <button id="editorSaveButton" class="editor-action-button editor-save-button" onclick="saveEditedImage()">
+                                    <i class="fas fa-save"></i> Guardar Cambios
                                 </button>
                             </div>
                         </div>
@@ -1477,8 +2054,59 @@
                                 <div class="stat-value" id="adminStorage">0 MB</div>
                                 <div class="stat-label">Almacenamiento</div>
                             </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div class="stat-value" id="adminEdited">0</div>
+                                <div class="stat-label">Imágenes Editadas</div>
+                            </div>
                         </div>
                         
+                        <!-- Herramientas de mantenimiento -->
+                        <div style="margin-top: 40px;">
+                            <h3 style="font-size: 18px; margin-bottom: 20px; color: var(--gris-oscuro);">
+                                <i class="fas fa-tools"></i> Herramientas de Mantenimiento
+                            </h3>
+                            <div style="background: #f8fafc; border-radius: 12px; padding: 20px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                                    <button class="btn-main warning" onclick="optimizeDatabase()">
+                                        <i class="fas fa-broom"></i> Optimizar Base de Datos
+                                    </button>
+                                    <button class="btn-main danger" onclick="clearAllImages()">
+                                        <i class="fas fa-trash"></i> Eliminar Todas las Imágenes
+                                    </button>
+                                    <button class="btn-main" onclick="exportDatabase()">
+                                        <i class="fas fa-file-export"></i> Exportar Base de Datos
+                                    </button>
+                                    <button class="btn-main" onclick="importDatabase()">
+                                        <i class="fas fa-file-import"></i> Importar Base de Datos
+                                    </button>
+                                </div>
+                                
+                                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                                    <h4 style="font-size: 16px; margin-bottom: 10px; color: var(--gris-oscuro);">
+                                        <i class="fas fa-info-circle"></i> Información del Sistema
+                                    </h4>
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                                        <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                            <div style="font-size: 12px; color: var(--gris-claro);">Capacidad Máxima</div>
+                                            <div style="font-weight: 600;">10,000 imágenes</div>
+                                        </div>
+                                        <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                            <div style="font-size: 12px; color: var(--gris-claro);">Imágenes por Página</div>
+                                            <div style="font-weight: 600;" id="imagesPerPage">12</div>
+                                        </div>
+                                        <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                            <div style="font-size: 12px; color: var(--gris-claro);">Última Actualización</div>
+                                            <div style="font-weight: 600;" id="lastUpdate">-</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Historial de Actividad -->
                         <div style="margin-top: 40px;">
                             <h3 style="font-size: 18px; margin-bottom: 20px; color: var(--gris-oscuro);">
                                 <i class="fas fa-history"></i> Historial de Actividad
@@ -1486,7 +2114,7 @@
                             <div id="activityLog" style="background: #f8fafc; border-radius: 12px; padding: 20px; min-height: 200px;">
                                 <div style="text-align: center; padding: 40px;">
                                     <i class="fas fa-history" style="font-size: 48px; color: #d1d5db; margin-bottom: 16px;"></i>
-                                    <p style="color: var(--gris-claro);">No hay actividad registrada</p>
+                                    <p style="color: var(--gris-claro);">Cargando historial...</p>
                                 </div>
                             </div>
                         </div>
@@ -1497,7 +2125,10 @@
             <div class="main-footer">
                 <p><strong>Archivo Jurídico Digital</strong> - Sistema de Gestión de Evidencias Visuales</p>
                 <p style="margin-top: 8px; font-size: 13px; color: var(--gris-claro);">
-                    © <span id="currentYear"></span> - Sistema seguro y confidencial
+                    © <span id="currentYear"></span> - Sistema seguro y confidencial | 
+                    <span id="dbStatus" style="color: var(--verde);">
+                        <i class="fas fa-circle" style="font-size: 8px;"></i> Base de datos conectada
+                    </span>
                 </p>
             </div>
         </div>
@@ -1523,6 +2154,22 @@
         </div>
     </div>
 
+    <!-- Modal de confirmación -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+            <h3 class="confirm-modal-title" id="confirmModalTitle">Confirmar acción</h3>
+            <p class="confirm-modal-message" id="confirmModalMessage">¿Estás seguro de realizar esta acción?</p>
+            <div class="confirm-modal-buttons">
+                <button class="btn btn-outline" onclick="closeConfirmModal()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="btn btn-primary" onclick="executeConfirmedAction()">
+                    <i class="fas fa-check"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Notificación -->
     <div id="notification" class="notification"></div>
 
@@ -1534,41 +2181,653 @@
         let images = [];
         let currentImageIndex = null;
         
-        // Variables del editor avanzado
+        // Variables del editor CORREGIDAS
         let editorCurrentTool = 'select';
-        let editorCropArea = { x: 100, y: 100, width: 300, height: 300 };
-        let editorIsCropping = false;
-        let editorIsDragging = false;
-        let editorDragHandle = null;
         let editorBrightness = 100;
         let editorContrast = 100;
         let editorScale = 1;
-        let editorIsDraggingImage = false;
+        let editorRotation = 0;
         let editorImagePosition = { x: 0, y: 0 };
+        let editorIsDraggingImage = false;
         let editorDragStart = { x: 0, y: 0 };
+
+        // Variables para dibujo
+        let isDrawing = false;
+        let drawingCanvas = null;
+        let drawingContext = null;
+        let overlayCanvas = null;
+        let overlayContext = null;
+        let currentDrawingColor = '#4a9eff';
+        let currentLineWidth = 3;
+        let currentFontSize = 16;
+        let textInput = null;
+        let drawingElements = [];
+
+        // Variables para paginación
+        let currentPage = 1;
+        let totalPages = 1;
+        let imagesPerPage = 12;
+        let currentFilter = 'all';
+        let currentSearchTerm = '';
+        let debounceTimer = null;
+
+        // Base de datos
+        const DB_NAME = 'ArchivoJuridicoDB';
+        const DB_VERSION = 3;
+        const STORE_NAME = 'evidencias';
+        const STATS_STORE = 'estadisticas';
+        const ACTIVITY_STORE = 'actividad';
+        const MAX_STORAGE_MB = 10240;
+        let db = null;
+
+        // Subida de archivos
+        let selectedFiles = [];
+        let uploadInProgress = false;
+
+        // Modal de confirmación
+        let pendingAction = null;
+        let pendingActionParams = null;
+
+        // Imagen original para procesar
+        let originalImageData = null;
 
         // ========== INICIALIZACIÓN ==========
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Archivo Jurídico Digital - Sistema inicializado');
+            console.log('Sistema Archivo Jurídico Digital - Inicializando...');
             
-            // Configurar año actual
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
-            // Inicializar login
             initLogin();
             
-            // Inicializar eventos del panel
-            initPanelEvents();
-            
-            // Inicializar editor avanzado
-            initAdvancedEditor();
-            
-            // Cargar datos de ejemplo
-            loadSampleData();
-            
-            // Actualizar estadísticas iniciales
-            updateStats();
+            initDatabase().then(() => {
+                updateStats();
+                loadGalleryPage(1);
+                document.getElementById('dbStatus').innerHTML = 
+                    '<i class="fas fa-circle" style="font-size: 8px; color: var(--verde);"></i> Base de datos conectada';
+                loadActivityLog();
+                initPanelEvents();
+                initAdvancedEditor();
+            }).catch(error => {
+                console.error('Error:', error);
+                document.getElementById('dbStatus').innerHTML = 
+                    '<i class="fas fa-circle" style="font-size: 8px; color: var(--rojo);"></i> Error en base de datos';
+                showNotification('Error al conectar con la base de datos', 'error');
+            });
         });
+
+        // ========== BASE DE DATOS INDEXEDDB ==========
+        function initDatabase() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = function(event) {
+                    reject(event.target.error);
+                };
+                
+                request.onsuccess = function(event) {
+                    db = event.target.result;
+                    console.log('Base de datos conectada');
+                    
+                    checkForInitialData().then(resolve).catch(reject);
+                };
+                
+                request.onupgradeneeded = function(event) {
+                    const db = event.target.result;
+                    
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        store.createIndex('date', 'date', { unique: false });
+                        store.createIndex('name', 'name', { unique: false });
+                        store.createIndex('edited', 'edited', { unique: false });
+                        store.createIndex('sizeMB', 'sizeMB', { unique: false });
+                    }
+                    
+                    if (!db.objectStoreNames.contains(STATS_STORE)) {
+                        const statsStore = db.createObjectStore(STATS_STORE, { keyPath: 'id' });
+                        statsStore.createIndex('key', 'key', { unique: true });
+                    }
+                    
+                    if (!db.objectStoreNames.contains(ACTIVITY_STORE)) {
+                        const activityStore = db.createObjectStore(ACTIVITY_STORE, { keyPath: 'id', autoIncrement: true });
+                        activityStore.createIndex('date', 'date', { unique: false });
+                        activityStore.createIndex('type', 'type', { unique: false });
+                    }
+                };
+            });
+        }
+
+        async function checkForInitialData() {
+            const count = await getTotalImageCount();
+            
+            if (count === 0) {
+                await addSampleImages();
+                showNotification('Base de datos inicializada con imágenes de ejemplo', 'info');
+            }
+            
+            await updateLastUpdate();
+        }
+
+        async function addSampleImages() {
+            const sampleImages = [
+                {
+                    name: 'evidencia-001.jpg',
+                    url: 'https://via.placeholder.com/800x600/1e3a8a/ffffff?text=Evidencia+Visual+001',
+                    sizeMB: 2.5,
+                    date: new Date().toLocaleDateString('es-ES'),
+                    description: 'Evidencia de caso #001 - Documento fiscal',
+                    edited: false,
+                    tags: ['fiscal', 'documento', 'caso-001']
+                },
+                {
+                    name: 'documento-fiscal.png',
+                    url: 'https://via.placeholder.com/600x800/2563eb/ffffff?text=Documento+Fiscal',
+                    sizeMB: 1.8,
+                    date: new Date().toLocaleDateString('es-ES'),
+                    description: 'Documento fiscal adjunto al caso',
+                    edited: false,
+                    tags: ['fiscal', 'contrato', 'legal']
+                },
+                {
+                    name: 'fotografia-prueba.jpg',
+                    url: 'https://via.placeholder.com/800x600/3b82f6/ffffff?text=Fotografia+de+Prueba',
+                    sizeMB: 3.2,
+                    date: new Date().toLocaleDateString('es-ES'),
+                    description: 'Fotografía de prueba del caso judicial',
+                    edited: false,
+                    tags: ['fotografia', 'prueba', 'caso-001']
+                },
+                {
+                    name: 'contrato-firmado.pdf.jpg',
+                    url: 'https://via.placeholder.com/600x800/059669/ffffff?text=Contrato+Firmado',
+                    sizeMB: 2.1,
+                    date: new Date().toLocaleDateString('es-ES'),
+                    description: 'Contrato firmado por ambas partes',
+                    edited: true,
+                    editDate: new Date().toLocaleString('es-ES'),
+                    tags: ['contrato', 'firmado', 'legal']
+                }
+            ];
+            
+            for (const image of sampleImages) {
+                await saveImageToDB(image);
+            }
+            
+            await logActivity('system', 'Base de datos inicializada con imágenes de ejemplo');
+        }
+
+        function saveImageToDB(image) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject('Base de datos no inicializada');
+                    return;
+                }
+                
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.add(image);
+                
+                request.onsuccess = function() {
+                    logActivity('upload', `Imagen subida: ${image.name}`);
+                    resolve(request.result);
+                };
+                
+                request.onerror = reject;
+            });
+        }
+
+        function getImagesFromDB(start = 0, limit = imagesPerPage, filter = 'all', search = '') {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject('Base de datos no inicializada');
+                    return;
+                }
+                
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                let request = store.openCursor();
+                
+                const allImages = [];
+                let count = 0;
+                let filteredCount = 0;
+                
+                request.onsuccess = function(event) {
+                    const cursor = event.target.result;
+                    
+                    if (cursor) {
+                        const image = cursor.value;
+                        count++;
+                        
+                        if (applyFilter(image, filter, search)) {
+                            filteredCount++;
+                            if (allImages.length < limit && filteredCount > start) {
+                                allImages.push({
+                                    id: cursor.primaryKey,
+                                    ...image
+                                });
+                            }
+                        }
+                        
+                        cursor.continue();
+                    } else {
+                        resolve({
+                            images: allImages,
+                            total: filteredCount
+                        });
+                    }
+                };
+                
+                request.onerror = reject;
+            });
+        }
+
+        function applyFilter(image, filter, search) {
+            if (search) {
+                const searchLower = search.toLowerCase();
+                if (!image.name.toLowerCase().includes(searchLower) &&
+                    !image.description.toLowerCase().includes(searchLower) &&
+                    !(image.tags && image.tags.some(tag => tag.toLowerCase().includes(searchLower)))) {
+                    return false;
+                }
+            }
+            
+            switch(filter) {
+                case 'edited':
+                    return image.edited === true;
+                case 'recent':
+                    const imageDate = new Date(image.date);
+                    const weekAgo = new Date();
+                    weekAgo.setDate(weekAgo.getDate() - 7);
+                    return imageDate >= weekAgo;
+                case 'large':
+                    return image.sizeMB > 2;
+                case 'small':
+                    return image.sizeMB < 1;
+                default:
+                    return true;
+            }
+        }
+
+        function updateImageInDB(id, updates) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject('Base de datos no inicializada');
+                    return;
+                }
+                
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const getRequest = store.get(id);
+                
+                getRequest.onsuccess = function() {
+                    const image = getRequest.result;
+                    if (!image) {
+                        reject('Imagen no encontrada');
+                        return;
+                    }
+                    
+                    const updatedImage = { ...image, ...updates };
+                    const updateRequest = store.put(updatedImage);
+                    
+                    updateRequest.onsuccess = function() {
+                        logActivity('edit', `Imagen editada: ${image.name}`);
+                        resolve(updatedImage);
+                    };
+                    
+                    updateRequest.onerror = reject;
+                };
+                
+                getRequest.onerror = reject;
+            });
+        }
+
+        function deleteImageFromDB(id) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject('Base de datos no inicializada');
+                    return;
+                }
+                
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.delete(id);
+                
+                request.onsuccess = function() {
+                    logActivity('delete', `Imagen eliminada (ID: ${id})`);
+                    resolve(true);
+                };
+                
+                request.onerror = reject;
+            });
+        }
+
+        // ========== SUBIDA DE ARCHIVOS ==========
+        function initPanelEvents() {
+            const dropzone = document.getElementById('uploadDropzone');
+            const fileInput = document.getElementById('fileInput');
+            
+            if (dropzone && fileInput) {
+                dropzone.addEventListener('click', () => fileInput.click());
+                
+                fileInput.addEventListener('change', function(e) {
+                    handleFileSelection(e.target.files);
+                });
+                
+                dropzone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    dropzone.classList.add('dragover');
+                });
+                
+                dropzone.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    dropzone.classList.remove('dragover');
+                });
+                
+                dropzone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    dropzone.classList.remove('dragover');
+                    if (e.dataTransfer.files.length) {
+                        handleFileSelection(e.dataTransfer.files);
+                    }
+                });
+            }
+            
+            const editorLoadBtn = document.getElementById('editorLoadImageBtn');
+            if (editorLoadBtn) {
+                editorLoadBtn.addEventListener('click', function() {
+                    openEditorImageUploadModal();
+                });
+            }
+        }
+
+        function handleFileSelection(files) {
+            const maxFiles = 50;
+            const filesArray = Array.from(files);
+            
+            if (filesArray.length > maxFiles) {
+                showNotification(`Solo puedes subir hasta ${maxFiles} archivos a la vez`, 'warning');
+                filesArray.length = maxFiles;
+            }
+            
+            filesArray.forEach(file => {
+                const existingIndex = selectedFiles.findIndex(f => 
+                    f.name === file.name && f.size === file.size && f.lastModified === file.lastModified
+                );
+                
+                if (existingIndex === -1) {
+                    selectedFiles.push({
+                        file: file,
+                        progress: 0,
+                        status: 'pending',
+                        sizeMB: (file.size / (1024 * 1024)).toFixed(2)
+                    });
+                }
+            });
+            
+            updateFileList();
+            updateUploadStats();
+        }
+
+        function updateFileList() {
+            const fileList = document.getElementById('fileList');
+            const uploadButton = document.getElementById('uploadButton');
+            
+            if (selectedFiles.length === 0) {
+                fileList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--gris-claro);">
+                        <i class="fas fa-folder-open" style="font-size: 48px; margin-bottom: 16px;"></i>
+                        <p>No hay archivos seleccionados</p>
+                    </div>
+                `;
+                uploadButton.disabled = true;
+                return;
+            }
+            
+            uploadButton.disabled = false;
+            
+            let html = '<h4 style="margin-bottom: 16px; color: var(--gris-oscuro);">Archivos seleccionados:</h4>';
+            
+            selectedFiles.forEach((fileData, index) => {
+                const file = fileData.file;
+                const fileIcon = getFileIcon(file.type);
+                const statusClass = fileData.status;
+                const statusText = getStatusText(fileData.status);
+                
+                html += `
+                    <div class="file-item ${statusClass}" id="file-item-${index}">
+                        <div style="font-size: 24px; color: var(--azul-medio);">
+                            ${fileIcon}
+                        </div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-weight: 500; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                ${file.name}
+                            </div>
+                            <div style="font-size: 12px; color: var(--gris-claro); display: flex; justify-content: space-between;">
+                                <span>${fileData.sizeMB} MB • ${file.type.split('/')[1].toUpperCase() || 'Desconocido'}</span>
+                                <span class="file-status ${statusClass}">${statusText}</span>
+                            </div>
+                            ${fileData.status === 'uploading' || fileData.status === 'pending' ? `
+                                <div class="file-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="progress-fill-${index}" style="width: ${fileData.progress}%"></div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <button class="image-action-btn" onclick="removeFile(${index})" ${fileData.status === 'uploading' ? 'disabled' : ''} style="width: 36px; height: 36px;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            fileList.innerHTML = html;
+        }
+
+        function getFileIcon(mimeType) {
+            if (mimeType.includes('jpeg') || mimeType.includes('jpg')) {
+                return '<i class="fas fa-file-image"></i>';
+            } else if (mimeType.includes('png')) {
+                return '<i class="fas fa-file-image"></i>';
+            } else if (mimeType.includes('gif')) {
+                return '<i class="fas fa-file-image"></i>';
+            } else {
+                return '<i class="fas fa-file"></i>';
+            }
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'pending': return 'Pendiente';
+                case 'uploading': return 'Subiendo...';
+                case 'success': return 'Completado';
+                case 'error': return 'Error';
+                default: return 'Pendiente';
+            }
+        }
+
+        function updateUploadStats() {
+            const selectedCount = selectedFiles.length;
+            const totalSize = selectedFiles.reduce((sum, fileData) => sum + parseFloat(fileData.sizeMB), 0);
+            
+            document.getElementById('selectedCount').textContent = `${selectedCount} archivos seleccionados`;
+            document.getElementById('totalSizeInfo').textContent = `Total: ${totalSize.toFixed(2)} MB`;
+        }
+
+        function removeFile(index) {
+            if (selectedFiles[index].status === 'uploading') {
+                showNotification('No puedes eliminar un archivo mientras se está subiendo', 'warning');
+                return;
+            }
+            
+            selectedFiles.splice(index, 1);
+            updateFileList();
+            updateUploadStats();
+        }
+
+        function clearFileList() {
+            const uploadingFiles = selectedFiles.filter(f => f.status === 'uploading');
+            
+            if (uploadingFiles.length > 0) {
+                showNotification('No puedes limpiar la lista mientras hay archivos subiéndose', 'warning');
+                return;
+            }
+            
+            selectedFiles = [];
+            updateFileList();
+            updateUploadStats();
+            showNotification('Lista de archivos limpiada', 'info');
+        }
+
+        async function uploadFiles() {
+            if (selectedFiles.length === 0) {
+                showNotification('No hay archivos para subir', 'warning');
+                return;
+            }
+            
+            if (uploadInProgress) {
+                showNotification('Ya hay una subida en progreso', 'warning');
+                return;
+            }
+            
+            const stats = await getStorageStats();
+            const currentStorageMB = stats.totalSize;
+            const totalNewSize = selectedFiles
+                .filter(f => f.status === 'pending')
+                .reduce((sum, fileData) => sum + parseFloat(fileData.sizeMB), 0);
+            
+            if (currentStorageMB + totalNewSize > MAX_STORAGE_MB) {
+                showNotification('Espacio de almacenamiento insuficiente. Por favor, elimina algunas imágenes.', 'error');
+                return;
+            }
+            
+            uploadInProgress = true;
+            const uploadButton = document.getElementById('uploadButton');
+            uploadButton.disabled = true;
+            uploadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo...';
+            
+            showNotification(`Iniciando subida de ${selectedFiles.filter(f => f.status === 'pending').length} archivos...`, 'info');
+            
+            for (let i = 0; i < selectedFiles.length; i++) {
+                if (selectedFiles[i].status === 'pending') {
+                    await uploadSingleFile(i);
+                }
+            }
+            
+            finishUpload();
+        }
+
+        async function uploadSingleFile(index) {
+            const fileData = selectedFiles[index];
+            fileData.status = 'uploading';
+            updateFileItem(index);
+            
+            try {
+                // Simular progreso
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    if (progress >= 100 || fileData.status !== 'uploading') {
+                        clearInterval(progressInterval);
+                        return;
+                    }
+                    
+                    progress += Math.random() * 20 + 5;
+                    if (progress > 100) progress = 100;
+                    
+                    fileData.progress = progress;
+                    updateProgressBar(index, progress);
+                }, 200);
+                
+                const imageUrl = await readFileAsDataURL(fileData.file);
+                
+                const imageData = {
+                    name: fileData.file.name,
+                    url: imageUrl,
+                    sizeMB: parseFloat(fileData.sizeMB),
+                    date: new Date().toLocaleDateString('es-ES'),
+                    description: `Imagen subida el ${new Date().toLocaleString('es-ES')}`,
+                    edited: false,
+                    tags: ['subido']
+                };
+                
+                await saveImageToDB(imageData);
+                
+                fileData.status = 'success';
+                fileData.progress = 100;
+                updateFileItem(index);
+                
+            } catch (error) {
+                console.error(`Error al subir ${fileData.file.name}:`, error);
+                fileData.status = 'error';
+                updateFileItem(index);
+            }
+        }
+
+        function updateFileItem(index) {
+            const fileItem = document.getElementById(`file-item-${index}`);
+            if (!fileItem) return;
+            
+            const fileData = selectedFiles[index];
+            const statusClass = fileData.status;
+            const statusText = getStatusText(fileData.status);
+            
+            fileItem.className = `file-item ${statusClass}`;
+            
+            const statusSpan = fileItem.querySelector('.file-status');
+            if (statusSpan) {
+                statusSpan.className = `file-status ${statusClass}`;
+                statusSpan.textContent = statusText;
+            }
+            
+            if (fileData.status === 'uploading' || fileData.status === 'pending') {
+                updateProgressBar(index, fileData.progress);
+            }
+        }
+
+        function updateProgressBar(index, progress) {
+            const progressFill = document.getElementById(`progress-fill-${index}`);
+            if (progressFill) {
+                progressFill.style.width = `${progress}%`;
+            }
+        }
+
+        function finishUpload() {
+            uploadInProgress = false;
+            const uploadButton = document.getElementById('uploadButton');
+            uploadButton.disabled = false;
+            uploadButton.innerHTML = '<i class="fas fa-upload"></i> Subir Imágenes';
+            
+            const successful = selectedFiles.filter(f => f.status === 'success').length;
+            const failed = selectedFiles.filter(f => f.status === 'error').length;
+            
+            if (successful > 0) {
+                showNotification(`¡${successful} imagen(es) subida(s) correctamente!`, 'success');
+                updateStats();
+                loadGalleryPage(1);
+                
+                setTimeout(() => {
+                    selectedFiles = selectedFiles.filter(f => f.status !== 'success');
+                    updateFileList();
+                    updateUploadStats();
+                }, 3000);
+            }
+            
+            if (failed > 0) {
+                showNotification(`${failed} imagen(es) no se pudieron subir`, 'warning');
+            }
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    resolve(event.target.result);
+                };
+                reader.onerror = function(event) {
+                    reject(event.target.error);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
 
         // ========== LOGIN ==========
         function initLogin() {
@@ -1581,11 +2840,10 @@
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 
-                // Credenciales válidas
                 if (username === 'admin' && password === '1234') {
                     loginSuccess();
                 } else {
-                    showError('Credenciales incorrectas. Usa: admin / 1234');
+                    showNotification('Credenciales incorrectas. Usa: admin / 1234', 'error');
                 }
             });
             
@@ -1596,105 +2854,54 @@
         }
 
         function loginSuccess() {
-            // Guardar usuario
             currentUser = {
                 username: 'admin',
                 role: 'admin'
             };
             
-            // Mostrar panel principal
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('mainScreen').style.display = 'block';
             
-            // Actualizar UI
             document.getElementById('userName').textContent = currentUser.username;
             document.getElementById('userAvatar').textContent = currentUser.username.charAt(0).toUpperCase();
             
-            // Mostrar dashboard
             showPanel('dashboard');
             
-            // Mostrar mensaje de bienvenida
             showNotification('Bienvenido al Archivo Jurídico Digital', 'success');
-        }
-
-        function logout() {
-            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-                currentUser = null;
-                document.getElementById('mainScreen').style.display = 'none';
-                document.getElementById('loginScreen').style.display = 'flex';
-                
-                // Limpiar formulario
-                document.getElementById('loginForm').reset();
-            }
-        }
-
-        // ========== NAVEGACIÓN DEL PANEL ==========
-        function initPanelEvents() {
-            // Configurar dropzone de subida
-            const dropzone = document.getElementById('uploadDropzone');
-            const fileInput = document.getElementById('fileInput');
             
-            if (dropzone && fileInput) {
-                dropzone.addEventListener('click', () => fileInput.click());
-                
-                fileInput.addEventListener('change', updateFileList);
-                
-                // Drag and drop
-                ['dragover', 'dragenter'].forEach(event => {
-                    dropzone.addEventListener(event, (e) => {
-                        e.preventDefault();
-                        dropzone.style.borderColor = '#2563eb';
-                        dropzone.style.background = '#eff6ff';
-                    });
-                });
-                
-                ['dragleave', 'dragend'].forEach(event => {
-                    dropzone.addEventListener(event, () => {
-                        dropzone.style.borderColor = '#d1d5db';
-                        dropzone.style.background = '#f8fafc';
-                    });
-                });
-                
-                dropzone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    dropzone.style.borderColor = '#d1d5db';
-                    dropzone.style.background = '#f8fafc';
-                    
-                    if (e.dataTransfer.files.length) {
-                        fileInput.files = e.dataTransfer.files;
-                        updateFileList();
-                    }
-                });
-            }
+            logActivity('login', 'Usuario inició sesión');
         }
 
+        // ========== NAVEGACIÓN ==========
         function showPanel(panelName) {
-            // Ocultar todos los paneles
             document.querySelectorAll('.panel').forEach(panel => {
                 panel.classList.add('hidden');
             });
             
-            // Mostrar panel seleccionado
-            document.getElementById(panelName + 'Panel').classList.remove('hidden');
+            const panel = document.getElementById(panelName + 'Panel');
+            if (panel) {
+                panel.classList.remove('hidden');
+            }
             
-            // Actualizar navegación activa
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
             });
             
-            // Encontrar y activar el link correspondiente
             let targetLink = null;
             switch(panelName) {
                 case 'dashboard':
                     targetLink = document.querySelector('.nav-link[onclick*="dashboard"]');
-                    loadDashboard();
                     break;
                 case 'upload':
                     targetLink = document.querySelector('.nav-link[onclick*="upload"]');
+                    if (selectedFiles.length > 0) {
+                        selectedFiles = [];
+                        updateFileList();
+                        updateUploadStats();
+                    }
                     break;
                 case 'editor':
                     targetLink = document.querySelector('.nav-link[onclick*="editor"]');
-                    // No inicializar editor automáticamente, solo cuando se selecciona una imagen
                     break;
                 case 'admin':
                     targetLink = document.querySelector('.nav-link[onclick*="admin"]');
@@ -1707,819 +2914,1774 @@
             }
         }
 
-        // ========== DASHBOARD ==========
-        function loadDashboard() {
-            // Actualizar estadísticas
-            updateStats();
-            
-            // Cargar galería
-            renderGallery();
+        // ========== GESTIÓN DE IMÁGENES ==========
+        async function loadGalleryPage(page = 1) {
+            try {
+                const start = (page - 1) * imagesPerPage;
+                const result = await getImagesFromDB(start, imagesPerPage, currentFilter, currentSearchTerm);
+                
+                images = result.images;
+                const totalImages = result.total;
+                totalPages = Math.ceil(totalImages / imagesPerPage);
+                currentPage = page;
+                
+                displayGallery(images);
+                updatePagination();
+                
+            } catch (error) {
+                console.error('Error al cargar la galería:', error);
+                showNotification('Error al cargar las imágenes', 'error');
+            }
         }
 
-        function updateStats() {
-            const totalSize = images.reduce((sum, img) => sum + img.sizeMB, 0);
-            document.getElementById('totalImages').textContent = images.length;
-            document.getElementById('totalSize').textContent = totalSize.toFixed(1) + ' MB';
-            document.getElementById('activeUsers').textContent = '1';
-            
-            // Actualizar también panel admin
-            document.getElementById('adminTotalImages').textContent = images.length;
-            document.getElementById('adminStorage').textContent = totalSize.toFixed(1) + ' MB';
-            document.getElementById('adminActiveUsers').textContent = '1';
-        }
-
-        function renderGallery() {
+        function displayGallery(images) {
             const gallery = document.getElementById('imageGallery');
             
-            if (images.length === 0) {
+            if (!images || images.length === 0) {
                 gallery.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">
                             <i class="fas fa-images"></i>
                         </div>
-                        <h3 class="empty-title">No hay imágenes todavía</h3>
+                        <h3 class="empty-title">No hay imágenes</h3>
                         <p class="empty-description">
-                            Comience subiendo sus imágenes utilizando el botón "Subir imágenes"
+                            ${currentSearchTerm ? 'No se encontraron imágenes con la búsqueda actual.' : 
+                            'Sube tu primera imagen haciendo clic en el botón "Subir Nuevas Imágenes".'}
                         </p>
                         <button class="btn-main success" onclick="showPanel('upload')">
-                            <i class="fas fa-cloud-upload-alt"></i> Subir mis primeras imágenes
+                            <i class="fas fa-cloud-upload-alt"></i> Subir Imágenes
                         </button>
                     </div>
                 `;
                 return;
             }
             
-            gallery.innerHTML = images.map((image, index) => `
-                <div class="image-card fade-in">
-                    <div class="image-container">
-                        <img src="${image.url}" alt="${image.name}" loading="lazy">
-                        <div class="image-overlay">
-                            <div class="image-actions">
-                                <button class="image-action-btn" onclick="editImageAdvanced(${index})" title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="image-action-btn" onclick="downloadImage(${index})" title="Descargar">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                                <button class="image-action-btn" onclick="deleteImage(${index})" title="Eliminar">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+            let html = '';
+            
+            images.forEach((image, index) => {
+                const editDate = image.edited && image.editDate ? 
+                    `<div style="color: var(--verde); font-size: 11px;">Editada: ${image.editDate}</div>` : '';
+                
+                html += `
+                    <div class="image-card" onclick="viewImage(${image.id})">
+                        <div class="image-container">
+                            <img src="${image.url}" alt="${image.name}" 
+                                 onerror="this.src='https://via.placeholder.com/300x200/cccccc/666666?text=Error+al+cargar'">
+                            <div class="image-overlay">
+                                <div class="image-actions">
+                                    <button class="image-action-btn" onclick="event.stopPropagation(); editImage(${image.id})" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="image-action-btn" onclick="event.stopPropagation(); downloadImage(${image.id})" title="Descargar">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                    <button class="image-action-btn" onclick="event.stopPropagation(); deleteImage(${image.id})" title="Eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="image-info">
-                        <div class="image-title">${image.name}</div>
-                        <div class="image-meta">
-                            <span>${image.sizeMB.toFixed(1)} MB</span>
-                            <span>${image.date}</span>
+                        <div class="image-info">
+                            <div class="image-title">${image.name}</div>
+                            <div class="image-meta">
+                                <div>
+                                    <i class="fas fa-calendar"></i> ${image.date}
+                                </div>
+                                <div>
+                                    <i class="fas fa-database"></i> ${image.sizeMB} MB
+                                </div>
+                            </div>
+                            ${editDate}
                         </div>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        // ========== EDITOR DE IMÁGENES AVANZADO ==========
-        function initAdvancedEditor() {
-            // Elementos del editor
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            const imagePlaceholder = document.getElementById('editorImagePlaceholder');
-            const imageContainer = document.getElementById('editorImageContainer');
-            const cropOverlay = document.getElementById('editorCropOverlay');
-            const zoomInfo = document.getElementById('editorZoomInfo');
-            const brightnessSlider = document.getElementById('editorBrightnessSlider');
-            const contrastSlider = document.getElementById('editorContrastSlider');
-            const brightnessValue = document.getElementById('editorBrightnessValue');
-            const contrastValue = document.getElementById('editorContrastValue');
-            const fileInput = document.getElementById('editorFileInput');
-            const modal = document.getElementById('editorImageUploadModal');
-            
-            // Botones de herramientas
-            const selectTool = document.getElementById('editorSelectTool');
-            const cropTool = document.getElementById('editorCropTool');
-            const lineTool = document.getElementById('editorLineTool');
-            const textTool = document.getElementById('editorTextTool');
-            const adjustTool = document.getElementById('editorAdjustTool');
-            const loadImageBtn = document.getElementById('editorLoadImageBtn');
-            const uploadFromDevice = document.getElementById('editorUploadFromDevice');
-            const useSampleImage = document.getElementById('editorUseSampleImage');
-            const closeModal = document.getElementById('editorCloseModal');
-            const backButton = document.getElementById('editorBackButton');
-            const saveButton = document.getElementById('editorSaveButton');
-
-            // Configurar event listeners
-            if (selectTool) selectTool.addEventListener('click', () => setEditorActiveTool('select'));
-            if (cropTool) cropTool.addEventListener('click', () => setEditorActiveTool('crop'));
-            if (lineTool) lineTool.addEventListener('click', () => setEditorActiveTool('line'));
-            if (textTool) textTool.addEventListener('click', () => setEditorActiveTool('text'));
-            if (adjustTool) adjustTool.addEventListener('click', () => setEditorActiveTool('adjust'));
-            
-            // Sliders
-            if (brightnessSlider) brightnessSlider.addEventListener('input', updateEditorBrightness);
-            if (contrastSlider) contrastSlider.addEventListener('input', updateEditorContrast);
-            
-            // Botones de carga de imagen
-            if (loadImageBtn) loadImageBtn.addEventListener('click', openEditorImageUploadModal);
-            if (uploadFromDevice) uploadFromDevice.addEventListener('click', () => fileInput.click());
-            if (useSampleImage) useSampleImage.addEventListener('click', loadEditorSampleImage);
-            if (closeModal) closeModal.addEventListener('click', closeEditorImageUploadModal);
-            if (fileInput) fileInput.addEventListener('change', handleEditorImageUpload);
-            
-            // Botones de acción
-            if (backButton) backButton.addEventListener('click', handleEditorBackButton);
-            if (saveButton) saveButton.addEventListener('click', handleEditorSaveButton);
-            
-            // Eventos para el área de recorte
-            if (imageContainer) {
-                imageContainer.addEventListener('mousedown', handleEditorImageContainerMouseDown);
-            }
-            
-            document.addEventListener('mousemove', handleEditorMouseMove);
-            document.addEventListener('mouseup', handleEditorMouseUp);
-            
-            // Eventos para zoom con rueda del mouse
-            if (imageContainer) {
-                imageContainer.addEventListener('wheel', handleEditorZoom);
-            }
-            
-            // Configurar atajos de teclado
-            document.addEventListener('keydown', function(e) {
-                if (document.getElementById('editorPanel').classList.contains('hidden')) return;
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-                switch(e.key.toLowerCase()) {
-                    case 's': setEditorActiveTool('select'); break;
-                    case 'c': setEditorActiveTool('crop'); break;
-                    case 'l': setEditorActiveTool('line'); break;
-                    case 'q': setEditorActiveTool('text'); break;
-                    case 'a': setEditorActiveTool('adjust'); break;
-                    case 'escape': 
-                        if (editorCurrentTool === 'crop') {
-                            setEditorActiveTool('select');
-                        }
-                        break;
-                }
+                `;
             });
+            
+            gallery.innerHTML = html;
         }
 
-        function editImageAdvanced(imageIndex) {
-            console.log('Editando imagen con editor avanzado:', imageIndex, images[imageIndex]);
+        function updatePagination() {
+            const pageInfo = document.getElementById('pageInfo');
+            const prevBtn = document.getElementById('prevPageBtn');
+            const nextBtn = document.getElementById('nextPageBtn');
             
-            // Guardar índice de la imagen actual
-            currentImageIndex = imageIndex;
+            if (pageInfo) pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
+            if (prevBtn) prevBtn.disabled = currentPage <= 1;
+            if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
             
-            // Cargar la imagen en el editor
-            const image = images[imageIndex];
-            loadEditorImageFromSrc(image.url);
+            const paginationContainer = document.getElementById('paginationContainer');
+            if (paginationContainer) {
+                paginationContainer.style.display = totalPages <= 1 ? 'none' : 'flex';
+            }
+        }
+
+        function changePage(page) {
+            if (page < 1 || page > totalPages) return;
+            loadGalleryPage(page);
+        }
+
+        function filterImages(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
-            // Mostrar el panel del editor
+            currentFilter = filter;
+            currentPage = 1;
+            loadGalleryPage(1);
+        }
+
+        function searchImages() {
+            const searchInput = document.getElementById('searchInput');
+            currentSearchTerm = searchInput ? searchInput.value.trim() : '';
+            currentPage = 1;
+            loadGalleryPage(1);
+        }
+
+        function debounceSearch() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(searchImages, 500);
+        }
+
+        function viewImage(id) {
+            const image = images.find(img => img.id === id);
+            if (!image) return;
+            
+            showNotification(`Visualizando: ${image.name}`, 'info');
+        }
+
+        function editImage(id) {
+            const image = images.find(img => img.id === id);
+            if (!image) return;
+            
             showPanel('editor');
-            
-            // Mostrar confirmación
-            showNotification(`Editando: ${image.name}`, 'info');
+            loadImageIntoEditor(image);
         }
 
-        function setEditorActiveTool(tool) {
-            editorCurrentTool = tool;
+        function downloadImage(id) {
+            const image = images.find(img => img.id === id);
+            if (!image) return;
             
-            // Actualizar botones activos
-            const tools = ['editorSelectTool', 'editorCropTool', 'editorLineTool', 'editorTextTool', 'editorAdjustTool'];
-            tools.forEach(toolId => {
-                const btn = document.getElementById(toolId);
-                if (btn) btn.classList.remove('active');
-            });
+            const link = document.createElement('a');
+            link.href = image.url;
+            link.download = image.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
             
-            switch(tool) {
-                case 'select': 
-                    document.getElementById('editorSelectTool').classList.add('active'); 
-                    break;
-                case 'crop': 
-                    document.getElementById('editorCropTool').classList.add('active'); 
-                    break;
-                case 'line': 
-                    document.getElementById('editorLineTool').classList.add('active'); 
-                    break;
-                case 'text': 
-                    document.getElementById('editorTextTool').classList.add('active'); 
-                    break;
-                case 'adjust': 
-                    document.getElementById('editorAdjustTool').classList.add('active'); 
-                    break;
-            }
-            
-            // Mostrar/ocultar elementos según la herramienta
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (tool === 'crop' && imageDisplay.style.display === 'block') {
-                showEditorCropOverlay();
-            } else {
-                hideEditorCropOverlay();
-            }
-            
-            // Mostrar notificación
-            showNotification(`Herramienta activa: ${getEditorToolName(tool)}`, 'info');
+            showNotification(`Descargando: ${image.name}`, 'success');
         }
 
-        function getEditorToolName(tool) {
-            const toolNames = {
-                'select': 'Seleccionar',
-                'crop': 'Recortar',
-                'line': 'Línea',
-                'text': 'Texto',
-                'adjust': 'Ajustes'
-            };
-            return toolNames[tool] || 'Desconocida';
+        function deleteImage(id) {
+            const image = images.find(img => img.id === id);
+            if (!image) return;
+            
+            showConfirmModal(
+                'Eliminar Imagen',
+                `¿Estás seguro de eliminar la imagen "${image.name}"?`,
+                'deleteImageConfirmed',
+                { imageId: id }
+            );
         }
 
-        function handleEditorImageContainerMouseDown(e) {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (imageDisplay.style.display !== 'block') return;
+        async function deleteImageConfirmed(params) {
+            try {
+                await deleteImageFromDB(params.imageId);
+                await loadGalleryPage(currentPage);
+                await updateStats();
+                showNotification('Imagen eliminada correctamente', 'success');
+            } catch (error) {
+                console.error('Error al eliminar imagen:', error);
+                showNotification('Error al eliminar imagen', 'error');
+            }
+        }
+
+        // ========== EDITOR DE IMÁGENES - CORREGIDO ==========
+        function initAdvancedEditor() {
+            console.log('Inicializando editor avanzado...');
             
-            const imageContainer = document.getElementById('editorImageContainer');
-            const rect = imageContainer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            // Inicializar canvas
+            drawingCanvas = document.getElementById('editorDrawingCanvas');
+            drawingContext = drawingCanvas.getContext('2d');
             
-            if (editorCurrentTool === 'select') {
-                // Verificar si se hizo clic en la imagen
-                const imgRect = imageDisplay.getBoundingClientRect();
-                const imgX = imgRect.left - rect.left + editorImagePosition.x;
-                const imgY = imgRect.top - rect.top + editorImagePosition.y;
-                const imgWidth = imageDisplay.width * editorScale;
-                const imgHeight = imageDisplay.height * editorScale;
-                
-                if (x >= imgX && x <= imgX + imgWidth && y >= imgY && y <= imgY + imgHeight) {
-                    editorIsDraggingImage = true;
-                    editorDragStart = { x: x - editorImagePosition.x, y: y - editorImagePosition.y };
-                    imageContainer.style.cursor = 'grabbing';
-                    return;
-                }
+            overlayCanvas = document.createElement('canvas');
+            overlayContext = overlayCanvas.getContext('2d');
+            const canvasOverlay = document.getElementById('editorCanvasOverlay');
+            if (canvasOverlay) {
+                canvasOverlay.appendChild(overlayCanvas);
             }
             
-            if (editorCurrentTool === 'crop') {
-                // Verificar si se hizo clic en un controlador de recorte
-                const handles = document.querySelectorAll('.editor-crop-handle');
-                handles.forEach(handle => {
-                    const handleRect = handle.getBoundingClientRect();
-                    const handleX = handleRect.left - rect.left;
-                    const handleY = handleRect.top - rect.top;
-                    
-                    if (x >= handleX - 10 && x <= handleX + 10 && y >= handleY - 10 && y <= handleY + 10) {
-                        editorIsDragging = true;
-                        editorDragHandle = handle.classList[1]; // nw, ne, sw, se
-                        return;
+            textInput = document.getElementById('editorTextInput');
+            
+            // Configurar tamaño del canvas
+            updateCanvasSize();
+            window.addEventListener('resize', updateCanvasSize);
+            
+            // Configurar herramientas
+            setupEditorTools();
+            
+            // Configurar eventos de botones CORREGIDOS
+            const editorBackButton = document.getElementById('editorBackButton');
+            if (editorBackButton) {
+                editorBackButton.addEventListener('click', function() {
+                    showPanel('dashboard');
+                });
+            }
+            
+            // Configurar sliders CORREGIDOS
+            const brightnessSlider = document.getElementById('editorBrightnessSlider');
+            if (brightnessSlider) {
+                brightnessSlider.addEventListener('input', function() {
+                    editorBrightness = parseInt(this.value);
+                    document.getElementById('editorBrightnessValue').textContent = `${editorBrightness}%`;
+                    applyImageFilters();
+                });
+            }
+            
+            const contrastSlider = document.getElementById('editorContrastSlider');
+            if (contrastSlider) {
+                contrastSlider.addEventListener('input', function() {
+                    editorContrast = parseInt(this.value);
+                    document.getElementById('editorContrastValue').textContent = `${editorContrast}%`;
+                    applyImageFilters();
+                });
+            }
+            
+            // Configurar modal
+            setupEditorModal();
+        }
+
+        function setupEditorModal() {
+            const editorUploadFromDevice = document.getElementById('editorUploadFromDevice');
+            if (editorUploadFromDevice) {
+                editorUploadFromDevice.addEventListener('click', function() {
+                    document.getElementById('editorFileInput').click();
+                });
+            }
+            
+            const editorUseSampleImage = document.getElementById('editorUseSampleImage');
+            if (editorUseSampleImage) {
+                editorUseSampleImage.addEventListener('click', function() {
+                    loadSampleImageIntoEditor();
+                    closeEditorImageUploadModal();
+                });
+            }
+            
+            const editorCloseModal = document.getElementById('editorCloseModal');
+            if (editorCloseModal) {
+                editorCloseModal.addEventListener('click', function() {
+                    closeEditorImageUploadModal();
+                });
+            }
+            
+            const editorFileInput = document.getElementById('editorFileInput');
+            if (editorFileInput) {
+                editorFileInput.addEventListener('change', function(e) {
+                    if (e.target.files.length > 0) {
+                        loadImageFileIntoEditor(e.target.files[0]);
+                        closeEditorImageUploadModal();
                     }
                 });
-                
-                // Verificar si se hizo clic en el área de recorte para moverla
-                if (!editorIsDragging && 
-                    x >= editorCropArea.x && x <= editorCropArea.x + editorCropArea.width && 
-                    y >= editorCropArea.y && y <= editorCropArea.y + editorCropArea.height) {
-                    editorIsDragging = true;
-                    editorDragHandle = 'move';
-                    editorDragStart = { x: x - editorCropArea.x, y: y - editorCropArea.y };
-                    return;
-                }
-                
-                // Si se hizo clic fuera, crear nueva área de recorte
-                if (!editorIsDragging) {
-                    editorCropArea = { x: x - 150, y: y - 150, width: 300, height: 300 };
-                    updateEditorCropOverlay();
-                }
             }
         }
 
-        function handleEditorMouseMove(e) {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (imageDisplay.style.display !== 'block') return;
+        function setupEditorTools() {
+            const tools = {
+                'select': document.getElementById('editorSelectTool'),
+                'crop': document.getElementById('editorCropTool'),
+                'line': document.getElementById('editorLineTool'),
+                'text': document.getElementById('editorTextTool'),
+                'adjust': document.getElementById('editorAdjustTool')
+            };
             
-            const imageContainer = document.getElementById('editorImageContainer');
-            const rect = imageContainer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            // Arrastrar imagen
-            if (editorIsDraggingImage && editorCurrentTool === 'select') {
-                editorImagePosition.x = x - editorDragStart.x;
-                editorImagePosition.y = y - editorDragStart.y;
-                updateEditorImagePosition();
-            }
-            
-            // Arrastrar área de recorte
-            if (editorIsDragging && editorCurrentTool === 'crop') {
-                switch(editorDragHandle) {
-                    case 'move':
-                        editorCropArea.x = x - editorDragStart.x;
-                        editorCropArea.y = y - editorDragStart.y;
-                        break;
-                    case 'nw':
-                        editorCropArea.width += editorCropArea.x - x;
-                        editorCropArea.height += editorCropArea.y - y;
-                        editorCropArea.x = x;
-                        editorCropArea.y = y;
-                        break;
-                    case 'ne':
-                        editorCropArea.width = x - editorCropArea.x;
-                        editorCropArea.height += editorCropArea.y - y;
-                        editorCropArea.y = y;
-                        break;
-                    case 'sw':
-                        editorCropArea.width += editorCropArea.x - x;
-                        editorCropArea.height = y - editorCropArea.y;
-                        editorCropArea.x = x;
-                        break;
-                    case 'se':
-                        editorCropArea.width = x - editorCropArea.x;
-                        editorCropArea.height = y - editorCropArea.y;
-                        break;
+            Object.keys(tools).forEach(tool => {
+                const toolButton = tools[tool];
+                if (toolButton) {
+                    toolButton.addEventListener('click', function() {
+                        setEditorTool(tool);
+                    });
                 }
-                
-                // Limitar tamaño mínimo
-                editorCropArea.width = Math.max(50, editorCropArea.width);
-                editorCropArea.height = Math.max(50, editorCropArea.height);
-                
-                // Limitar dentro del contenedor
-                editorCropArea.x = Math.max(0, Math.min(editorCropArea.x, rect.width - editorCropArea.width));
-                editorCropArea.y = Math.max(0, Math.min(editorCropArea.y, rect.height - editorCropArea.height));
-                
-                updateEditorCropOverlay();
+            });
+            
+            setEditorTool('select');
+        }
+
+        function setEditorTool(tool) {
+            document.querySelectorAll('.editor-tool-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            const toolOptions = document.getElementById('editorToolOptions');
+            if (toolOptions) {
+                toolOptions.innerHTML = '';
+                toolOptions.classList.remove('active');
+            }
+            
+            const canvasOverlay = document.getElementById('editorCanvasOverlay');
+            if (canvasOverlay) {
+                canvasOverlay.classList.remove('active');
+            }
+            
+            const cropOverlay = document.getElementById('editorCropOverlay');
+            if (cropOverlay) {
+                cropOverlay.classList.remove('active');
+            }
+            
+            if (textInput) {
+                textInput.style.display = 'none';
+            }
+            
+            clearOverlayCanvas();
+            
+            const toolButton = document.getElementById(`editor${tool.charAt(0).toUpperCase() + tool.slice(1)}Tool`);
+            if (toolButton) {
+                toolButton.classList.add('active');
+            }
+            
+            editorCurrentTool = tool;
+            
+            switch(tool) {
+                case 'select':
+                    setupSelectTool();
+                    break;
+                case 'crop':
+                    setupCropTool();
+                    break;
+                case 'line':
+                    setupLineTool();
+                    break;
+                case 'text':
+                    setupTextTool();
+                    break;
+                case 'adjust':
+                    setupAdjustTool();
+                    break;
             }
         }
 
-        function handleEditorMouseUp() {
-            editorIsDraggingImage = false;
-            editorIsDragging = false;
-            editorDragHandle = null;
-            const imageContainer = document.getElementById('editorImageContainer');
-            if (imageContainer) imageContainer.style.cursor = 'default';
+        function setupSelectTool() {
+            const editorImg = document.getElementById('editorImageDisplay');
+            const container = document.getElementById('editorImageContainer');
+            
+            if (container) {
+                container.removeEventListener('mousedown', handleImageMouseDown);
+                container.removeEventListener('dblclick', handleImageDoubleClick);
+                container.addEventListener('dblclick', handleImageDoubleClick);
+            }
+            
+            if (editorImg) {
+                editorImg.style.cursor = 'default';
+            }
+            
+            const zoomInfo = document.getElementById('editorZoomInfo');
+            const rotationInfo = document.getElementById('editorRotationInfo');
+            if (zoomInfo) zoomInfo.style.display = 'block';
+            if (rotationInfo) rotationInfo.style.display = 'block';
         }
 
-        function handleEditorZoom(e) {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (imageDisplay.style.display !== 'block' || editorCurrentTool !== 'select') return;
+        function handleImageDoubleClick(e) {
+            if (e.target.id !== 'editorImageDisplay') return;
+            
+            editorIsDraggingImage = true;
+            const editorImg = document.getElementById('editorImageDisplay');
+            if (editorImg) {
+                editorImg.style.cursor = 'grabbing';
+            }
+            
+            editorDragStart = {
+                x: e.clientX - editorImagePosition.x,
+                y: e.clientY - editorImagePosition.y
+            };
+            
+            document.addEventListener('mousemove', handleImageMouseMove);
+            document.addEventListener('mouseup', handleImageMouseUp);
+        }
+
+        function handleImageMouseMove(e) {
+            if (!editorIsDraggingImage) return;
             
             e.preventDefault();
-            const delta = e.deltaY > 0 ? -0.1 : 0.1;
-            editorScale = Math.max(0.1, Math.min(5, editorScale + delta));
-            
-            updateEditorImageTransform();
-            const zoomInfo = document.getElementById('editorZoomInfo');
-            zoomInfo.textContent = `Zoom: ${Math.round(editorScale * 100)}%`;
-            zoomInfo.style.display = 'block';
-            
-            // Ocultar después de 2 segundos
-            setTimeout(() => {
-                zoomInfo.style.display = 'none';
-            }, 2000);
-        }
-
-        function updateEditorImageTransform() {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            imageDisplay.style.transform = `translate(${editorImagePosition.x}px, ${editorImagePosition.y}px) scale(${editorScale})`;
-            imageDisplay.style.filter = `brightness(${editorBrightness}%) contrast(${editorContrast}%)`;
-        }
-
-        function updateEditorImagePosition() {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            imageDisplay.style.transform = `translate(${editorImagePosition.x}px, ${editorImagePosition.y}px) scale(${editorScale})`;
-        }
-
-        function showEditorCropOverlay() {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (imageDisplay.style.display !== 'block') return;
-            
-            // Configurar área de recorte inicial (centrada)
-            const imageContainer = document.getElementById('editorImageContainer');
-            const rect = imageContainer.getBoundingClientRect();
-            editorCropArea = {
-                x: rect.width / 2 - 150,
-                y: rect.height / 2 - 150,
-                width: 300,
-                height: 300
+            editorImagePosition = {
+                x: e.clientX - editorDragStart.x,
+                y: e.clientY - editorDragStart.y
             };
             
-            updateEditorCropOverlay();
-            const cropOverlay = document.getElementById('editorCropOverlay');
-            cropOverlay.style.display = 'block';
-            imageContainer.style.cursor = 'crosshair';
+            applyImageFilters();
         }
 
-        function hideEditorCropOverlay() {
-            const cropOverlay = document.getElementById('editorCropOverlay');
-            const imageContainer = document.getElementById('editorImageContainer');
-            cropOverlay.style.display = 'none';
-            imageContainer.style.cursor = 'default';
+        function handleImageMouseUp() {
+            if (!editorIsDraggingImage) return;
+            
+            editorIsDraggingImage = false;
+            const editorImg = document.getElementById('editorImageDisplay');
+            if (editorImg) {
+                editorImg.style.cursor = 'default';
+            }
+            
+            document.removeEventListener('mousemove', handleImageMouseMove);
+            document.removeEventListener('mouseup', handleImageMouseUp);
         }
 
-        function updateEditorCropOverlay() {
+        function setupCropTool() {
             const cropOverlay = document.getElementById('editorCropOverlay');
-            cropOverlay.style.left = `${editorCropArea.x}px`;
-            cropOverlay.style.top = `${editorCropArea.y}px`;
-            cropOverlay.style.width = `${editorCropArea.width}px`;
-            cropOverlay.style.height = `${editorCropArea.height}px`;
+            if (cropOverlay) {
+                cropOverlay.classList.add('active');
+                positionCropOverlay();
+                cropOverlay.addEventListener('mousedown', startDragCrop);
+                
+                const handles = cropOverlay.querySelectorAll('.editor-crop-handle');
+                handles.forEach(handle => {
+                    handle.addEventListener('mousedown', startResizeCrop);
+                });
+            }
+            
+            showToolOptions('crop', {
+                aspectRatio: '16:9',
+                freeform: true
+            });
         }
 
-        function applyEditorCrop() {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (imageDisplay.style.display !== 'block') return;
+        function positionCropOverlay() {
+            const cropOverlay = document.getElementById('editorCropOverlay');
+            const container = document.getElementById('editorImageContainer');
+            const editorImg = document.getElementById('editorImageDisplay');
             
-            // Crear canvas para recortar
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+            if (!editorImg || !editorImg.src || !cropOverlay || !container) return;
             
-            // Calcular dimensiones reales del recorte
-            const imgRect = imageDisplay.getBoundingClientRect();
-            const imageContainer = document.getElementById('editorImageContainer');
-            const containerRect = imageContainer.getBoundingClientRect();
+            const imgRect = editorImg.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
             
-            // Factor de escala entre la imagen mostrada y la original
-            const scaleFactor = imageDisplay.naturalWidth / imgRect.width;
+            cropOverlay.style.left = `${imgRect.left - containerRect.left}px`;
+            cropOverlay.style.top = `${imgRect.top - containerRect.top}px`;
+            cropOverlay.style.width = `${imgRect.width}px`;
+            cropOverlay.style.height = `${imgRect.height}px`;
+            cropOverlay.style.transform = 'none';
+        }
+
+        function startDragCrop(e) {
+            if (e.target.classList.contains('editor-crop-handle')) return;
             
-            // Calcular coordenadas de recorte en la imagen original
-            const cropX = (editorCropArea.x - (imgRect.left - containerRect.left) - editorImagePosition.x) * scaleFactor / editorScale;
-            const cropY = (editorCropArea.y - (imgRect.top - containerRect.top) - editorImagePosition.y) * scaleFactor / editorScale;
-            const cropWidth = editorCropArea.width * scaleFactor / editorScale;
-            const cropHeight = editorCropArea.height * scaleFactor / editorScale;
+            editorIsDragging = true;
+            const cropOverlay = document.getElementById('editorCropOverlay');
+            const rect = cropOverlay.getBoundingClientRect();
             
-            // Configurar canvas
-            canvas.width = cropWidth;
-            canvas.height = cropHeight;
-            
-            // Dibujar la porción recortada
-            ctx.drawImage(
-                imageDisplay, 
-                cropX, cropY, cropWidth, cropHeight,
-                0, 0, cropWidth, cropHeight
-            );
-            
-            // Reemplazar la imagen con la recortada
-            const newImage = new Image();
-            newImage.onload = function() {
-                imageDisplay.src = newImage.src;
-                
-                // Restablecer transformaciones
-                editorScale = 1;
-                editorImagePosition = { x: 0, y: 0 };
-                updateEditorImageTransform();
-                
-                // Ocultar área de recorte
-                hideEditorCropOverlay();
-                setEditorActiveTool('select');
-                
-                showNotification('Recorte aplicado correctamente', 'success');
+            editorDragStart = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+                left: rect.left,
+                top: rect.top
             };
-            newImage.src = canvas.toDataURL('image/png');
+            
+            cropOverlay.style.cursor = 'grabbing';
+            
+            document.addEventListener('mousemove', dragCrop);
+            document.addEventListener('mouseup', endDragCrop);
         }
 
-        function updateEditorBrightness() {
-            const brightnessSlider = document.getElementById('editorBrightnessSlider');
-            editorBrightness = parseInt(brightnessSlider.value);
-            const brightnessValue = document.getElementById('editorBrightnessValue');
-            brightnessValue.textContent = `${editorBrightness}%`;
+        function dragCrop(e) {
+            if (!editorIsDragging) return;
             
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            imageDisplay.style.filter = `brightness(${editorBrightness}%) contrast(${editorContrast}%)`;
+            e.preventDefault();
+            const cropOverlay = document.getElementById('editorCropOverlay');
+            const container = document.getElementById('editorImageContainer');
+            const containerRect = container.getBoundingClientRect();
+            
+            let newLeft = e.clientX - editorDragStart.x;
+            let newTop = e.clientY - editorDragStart.y;
+            
+            newLeft = Math.max(0, Math.min(newLeft, containerRect.width - cropOverlay.offsetWidth));
+            newTop = Math.max(0, Math.min(newTop, containerRect.height - cropOverlay.offsetHeight));
+            
+            cropOverlay.style.left = `${newLeft}px`;
+            cropOverlay.style.top = `${newTop}px`;
         }
 
-        function updateEditorContrast() {
-            const contrastSlider = document.getElementById('editorContrastSlider');
-            editorContrast = parseInt(contrastSlider.value);
-            const contrastValue = document.getElementById('editorContrastValue');
-            contrastValue.textContent = `${editorContrast}%`;
+        function endDragCrop() {
+            editorIsDragging = false;
+            const cropOverlay = document.getElementById('editorCropOverlay');
+            if (cropOverlay) {
+                cropOverlay.style.cursor = 'move';
+            }
             
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            imageDisplay.style.filter = `brightness(${editorBrightness}%) contrast(${editorContrast}%)`;
+            document.removeEventListener('mousemove', dragCrop);
+            document.removeEventListener('mouseup', endDragCrop);
+        }
+
+        function startResizeCrop(e) {
+            e.stopPropagation();
+            editorIsDragging = true;
+            editorDragHandle = e.target.classList[1];
+            
+            const cropOverlay = document.getElementById('editorCropOverlay');
+            const rect = cropOverlay.getBoundingClientRect();
+            
+            editorDragStart = {
+                x: e.clientX,
+                y: e.clientY,
+                width: rect.width,
+                height: rect.height,
+                left: rect.left,
+                top: rect.top
+            };
+            
+            document.addEventListener('mousemove', resizeCrop);
+            document.addEventListener('mouseup', endResizeCrop);
+        }
+
+        function resizeCrop(e) {
+            if (!editorIsDragging) return;
+            
+            e.preventDefault();
+            const cropOverlay = document.getElementById('editorCropOverlay');
+            const deltaX = e.clientX - editorDragStart.x;
+            const deltaY = e.clientY - editorDragStart.y;
+            
+            let newWidth = editorDragStart.width;
+            let newHeight = editorDragStart.height;
+            let newLeft = editorDragStart.left;
+            let newTop = editorDragStart.top;
+            
+            switch(editorDragHandle) {
+                case 'se':
+                    newWidth = Math.max(50, editorDragStart.width + deltaX);
+                    newHeight = Math.max(50, editorDragStart.height + deltaY);
+                    break;
+                case 'sw':
+                    newWidth = Math.max(50, editorDragStart.width - deltaX);
+                    newHeight = Math.max(50, editorDragStart.height + deltaY);
+                    newLeft = editorDragStart.left + deltaX;
+                    break;
+                case 'ne':
+                    newWidth = Math.max(50, editorDragStart.width + deltaX);
+                    newHeight = Math.max(50, editorDragStart.height - deltaY);
+                    newTop = editorDragStart.top + deltaY;
+                    break;
+                case 'nw':
+                    newWidth = Math.max(50, editorDragStart.width - deltaX);
+                    newHeight = Math.max(50, editorDragStart.height - deltaY);
+                    newLeft = editorDragStart.left + deltaX;
+                    newTop = editorDragStart.top + deltaY;
+                    break;
+            }
+            
+            const container = document.getElementById('editorImageContainer');
+            const containerRect = container.getBoundingClientRect();
+            
+            cropOverlay.style.left = `${newLeft - containerRect.left}px`;
+            cropOverlay.style.top = `${newTop - containerRect.top}px`;
+            cropOverlay.style.width = `${newWidth}px`;
+            cropOverlay.style.height = `${newHeight}px`;
+        }
+
+        function endResizeCrop() {
+            editorIsDragging = false;
+            editorDragHandle = null;
+            
+            document.removeEventListener('mousemove', resizeCrop);
+            document.removeEventListener('mouseup', endResizeCrop);
+        }
+
+        function setupLineTool() {
+            const canvasOverlay = document.getElementById('editorCanvasOverlay');
+            if (canvasOverlay) {
+                canvasOverlay.classList.add('active');
+            }
+            
+            setupDrawingEvents();
+            
+            showToolOptions('line', {
+                color: currentDrawingColor,
+                width: currentLineWidth
+            });
+        }
+
+        function setupDrawingEvents() {
+            const overlay = document.getElementById('editorCanvasOverlay');
+            if (!overlay) return;
+            
+            overlay.addEventListener('mousedown', startDrawing);
+            overlay.addEventListener('mousemove', draw);
+            overlay.addEventListener('mouseup', endDrawing);
+            overlay.addEventListener('mouseleave', endDrawing);
+        }
+
+        function startDrawing(e) {
+            if (editorCurrentTool !== 'line') return;
+            
+            isDrawing = true;
+            
+            const container = document.getElementById('editorImageContainer');
+            const containerRect = container.getBoundingClientRect();
+            const canvasRect = drawingCanvas.getBoundingClientRect();
+            
+            const x = e.clientX - canvasRect.left;
+            const y = e.clientY - canvasRect.top;
+            
+            // Corregir coordenadas según posición de la imagen
+            const correctedX = x;
+            const correctedY = y;
+            
+            drawingElements.push({
+                type: 'path',
+                points: [[correctedX, correctedY]],
+                color: currentDrawingColor,
+                width: currentLineWidth
+            });
+        }
+
+        function draw(e) {
+            if (!isDrawing || editorCurrentTool !== 'line') return;
+            
+            e.preventDefault();
+            
+            const canvasRect = drawingCanvas.getBoundingClientRect();
+            const x = e.clientX - canvasRect.left;
+            const y = e.clientY - canvasRect.top;
+            
+            // Corregir coordenadas según posición de la imagen
+            const correctedX = x;
+            const correctedY = y;
+            
+            // Dibujar en canvas temporal
+            overlayContext.beginPath();
+            overlayContext.strokeStyle = currentDrawingColor;
+            overlayContext.lineWidth = currentLineWidth;
+            overlayContext.lineJoin = 'round';
+            overlayContext.lineCap = 'round';
+            
+            const lastPoint = drawingElements[drawingElements.length - 1].points;
+            const lastCoord = lastPoint[lastPoint.length - 1];
+            
+            overlayContext.moveTo(lastCoord[0], lastCoord[1]);
+            overlayContext.lineTo(correctedX, correctedY);
+            overlayContext.stroke();
+            
+            drawingElements[drawingElements.length - 1].points.push([correctedX, correctedY]);
+        }
+
+        function endDrawing() {
+            if (!isDrawing) return;
+            
+            isDrawing = false;
+            
+            drawingContext.drawImage(overlayCanvas, 0, 0);
+            clearOverlayCanvas();
+        }
+
+        function setupTextTool() {
+            const container = document.getElementById('editorImageContainer');
+            if (container) {
+                container.removeEventListener('click', addTextAtPosition);
+                container.addEventListener('click', addTextAtPosition);
+            }
+            
+            showToolOptions('text', {
+                fontFamily: 'Inter, sans-serif',
+                fontSize: currentFontSize,
+                color: currentDrawingColor
+            });
+        }
+
+        function addTextAtPosition(e) {
+            if (editorCurrentTool !== 'text') return;
+            
+            const container = document.getElementById('editorImageContainer');
+            const containerRect = container.getBoundingClientRect();
+            const canvasRect = drawingCanvas.getBoundingClientRect();
+            
+            const x = e.clientX - canvasRect.left;
+            const y = e.clientY - canvasRect.top;
+            
+            if (textInput) {
+                textInput.style.left = `${x}px`;
+                textInput.style.top = `${y}px`;
+                textInput.style.display = 'block';
+                textInput.style.fontSize = `${currentFontSize}px`;
+                textInput.style.fontFamily = 'Inter, sans-serif';
+                textInput.style.color = currentDrawingColor;
+                textInput.style.borderColor = currentDrawingColor;
+                textInput.value = '';
+                textInput.focus();
+                
+                textInput.onblur = function() {
+                    if (this.value.trim()) {
+                        drawingElements.push({
+                            type: 'text',
+                            x: x,
+                            y: y,
+                            text: this.value,
+                            fontFamily: 'Inter, sans-serif',
+                            fontSize: currentFontSize,
+                            color: currentDrawingColor
+                        });
+                        
+                        drawingContext.font = `${currentFontSize}px Inter, sans-serif`;
+                        drawingContext.fillStyle = currentDrawingColor;
+                        drawingContext.fillText(this.value, x, y + currentFontSize);
+                    }
+                    this.style.display = 'none';
+                };
+                
+                textInput.onkeydown = function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        this.blur();
+                    }
+                };
+            }
+        }
+
+        function setupAdjustTool() {
+            showToolOptions('adjust', {
+                brightness: editorBrightness,
+                contrast: editorContrast
+            });
+        }
+
+        function showToolOptions(tool, options) {
+            const toolOptions = document.getElementById('editorToolOptions');
+            if (!toolOptions) return;
+            
+            toolOptions.classList.add('active');
+            
+            let html = '';
+            
+            switch(tool) {
+                case 'crop':
+                    html = `
+                        <div class="editor-tool-option-group">
+                            <label class="editor-tool-option-label">Relación de aspecto</label>
+                            <select class="editor-tool-option-input" id="cropAspectRatio">
+                                <option value="free">Libre</option>
+                                <option value="1:1">1:1 (Cuadrado)</option>
+                                <option value="4:3">4:3</option>
+                                <option value="16:9">16:9</option>
+                                <option value="3:2">3:2</option>
+                            </select>
+                        </div>
+                        <div class="editor-tool-option-group">
+                            <button class="editor-control-btn" onclick="applyCrop()" style="width: 100%;">
+                                <i class="fas fa-check"></i> Aplicar recorte
+                            </button>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'line':
+                    html = `
+                        <div class="editor-tool-option-group">
+                            <label class="editor-tool-option-label">Color</label>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="color" id="lineColor" value="${options.color}" 
+                                       class="editor-color-picker" onchange="changeLineColor(this.value)">
+                                <span style="color: #c0d6ff; font-size: 0.85rem;">${options.color}</span>
+                            </div>
+                        </div>
+                        <div class="editor-tool-option-group">
+                            <label class="editor-tool-option-label">Grosor</label>
+                            <div class="editor-line-width-selector">
+                                <div class="editor-line-width-option ${options.width === 1 ? 'active' : ''}" 
+                                     onclick="changeLineWidth(1)">1</div>
+                                <div class="editor-line-width-option ${options.width === 3 ? 'active' : ''}" 
+                                     onclick="changeLineWidth(3)">3</div>
+                                <div class="editor-line-width-option ${options.width === 5 ? 'active' : ''}" 
+                                     onclick="changeLineWidth(5)">5</div>
+                                <div class="editor-line-width-option ${options.width === 8 ? 'active' : ''}" 
+                                     onclick="changeLineWidth(8)">8</div>
+                            </div>
+                        </div>
+                        <div class="editor-tool-option-group">
+                            <button class="editor-control-btn" onclick="clearDrawing()" style="width: 100%;">
+                                <i class="fas fa-trash"></i> Limpiar dibujo
+                            </button>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'text':
+                    html = `
+                        <div class="editor-tool-option-group">
+                            <label class="editor-tool-option-label">Color</label>
+                            <input type="color" id="textColor" value="${options.color}" 
+                                   class="editor-color-picker" onchange="changeTextColor(this.value)">
+                        </div>
+                        <div class="editor-tool-option-group">
+                            <label class="editor-tool-option-label">Tamaño de fuente</label>
+                            <input type="range" min="8" max="72" value="${options.fontSize}" 
+                                   class="editor-slider" id="textFontSize" oninput="changeFontSize(this.value)">
+                            <div style="color: #c0d6ff; font-size: 0.85rem; text-align: center;">
+                                ${options.fontSize}px
+                            </div>
+                        </div>
+                        <div class="editor-tool-option-group">
+                            <button class="editor-control-btn" onclick="clearText()" style="width: 100%;">
+                                <i class="fas fa-trash"></i> Limpiar texto
+                            </button>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'adjust':
+                    html = `
+                        <div class="editor-tool-option-group">
+                            <label class="editor-tool-option-label">Brillo</label>
+                            <div style="color: #c0d6ff; font-size: 0.85rem; text-align: center;">
+                                ${editorBrightness}%
+                            </div>
+                        </div>
+                        <div class="editor-tool-option-group">
+                            <label class="editor-tool-option-label">Contraste</label>
+                            <div style="color: #c0d6ff; font-size: 0.85rem; text-align: center;">
+                                ${editorContrast}%
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            toolOptions.innerHTML = html;
+        }
+
+        function changeLineColor(color) {
+            currentDrawingColor = color;
+            const span = document.querySelector('#editorToolOptions span');
+            if (span) span.textContent = color;
+        }
+
+        function changeLineWidth(width) {
+            currentLineWidth = width;
+            
+            document.querySelectorAll('.editor-line-width-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        function changeTextColor(color) {
+            currentDrawingColor = color;
+        }
+
+        function changeFontSize(size) {
+            currentFontSize = parseInt(size);
+            const div = document.querySelector('#editorToolOptions div:nth-child(2)');
+            if (div) div.textContent = `${size}px`;
+        }
+
+        function clearDrawing() {
+            drawingContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+            drawingElements = drawingElements.filter(el => el.type !== 'path');
+            showNotification('Dibujo limpiado', 'info');
+        }
+
+        function clearText() {
+            drawingElements = drawingElements.filter(el => el.type !== 'text');
+            drawingContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+            redrawNonTextElements();
+            showNotification('Texto limpiado', 'info');
+        }
+
+        function redrawNonTextElements() {
+            drawingElements.forEach(el => {
+                if (el.type === 'path') {
+                    drawingContext.beginPath();
+                    drawingContext.strokeStyle = el.color;
+                    drawingContext.lineWidth = el.width;
+                    drawingContext.lineJoin = 'round';
+                    drawingContext.lineCap = 'round';
+                    
+                    if (el.points.length > 0) {
+                        drawingContext.moveTo(el.points[0][0], el.points[0][1]);
+                        for (let i = 1; i < el.points.length; i++) {
+                            drawingContext.lineTo(el.points[i][0], el.points[i][1]);
+                        }
+                        drawingContext.stroke();
+                    }
+                } else if (el.type === 'text') {
+                    drawingContext.font = `${el.fontSize}px ${el.fontFamily}`;
+                    drawingContext.fillStyle = el.color;
+                    drawingContext.fillText(el.text, el.x, el.y + el.fontSize);
+                }
+            });
+        }
+
+        function applyCrop() {
+            showNotification('Recorte aplicado (simulado - funcionalidad completa requiere backend)', 'info');
+        }
+
+        function updateCanvasSize() {
+            const container = document.getElementById('editorImageContainer');
+            if (!container) return;
+            
+            const rect = container.getBoundingClientRect();
+            
+            if (drawingCanvas) {
+                drawingCanvas.width = rect.width;
+                drawingCanvas.height = rect.height;
+                drawingCanvas.style.width = `${rect.width}px`;
+                drawingCanvas.style.height = `${rect.height}px`;
+            }
+            
+            if (overlayCanvas) {
+                overlayCanvas.width = rect.width;
+                overlayCanvas.height = rect.height;
+                overlayCanvas.style.width = `${rect.width}px`;
+                overlayCanvas.style.height = `${rect.height}px`;
+            }
+        }
+
+        function clearOverlayCanvas() {
+            if (overlayContext) {
+                overlayContext.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+            }
         }
 
         function openEditorImageUploadModal() {
             const modal = document.getElementById('editorImageUploadModal');
-            modal.style.display = 'flex';
+            if (modal) {
+                modal.style.display = 'flex';
+            }
         }
 
         function closeEditorImageUploadModal() {
             const modal = document.getElementById('editorImageUploadModal');
-            modal.style.display = 'none';
+            if (modal) {
+                modal.style.display = 'none';
+            }
         }
 
-        function handleEditorImageUpload(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+        function loadImageIntoEditor(image) {
+            currentImageIndex = images.findIndex(img => img.id === image.id);
             
-            if (!file.type.match('image.*')) {
-                showNotification('Por favor, selecciona un archivo de imagen válido', 'error');
-                return;
+            const editorImg = document.getElementById('editorImageDisplay');
+            const placeholder = document.getElementById('editorImagePlaceholder');
+            
+            if (editorImg && placeholder) {
+                editorImg.src = image.url;
+                editorImg.style.display = 'block';
+                placeholder.style.display = 'none';
+                
+                // Guardar la imagen original
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    originalImageData = img;
+                };
+                img.src = image.url;
             }
             
+            resetEditorState();
+            updateCanvasSize();
+        }
+
+        function loadSampleImageIntoEditor() {
+            const sampleImage = {
+                id: 'sample',
+                name: 'imagen-muestra.jpg',
+                url: 'https://via.placeholder.com/800x600/4a9eff/ffffff?text=Imagen+de+Muestra+para+Editar',
+                sizeMB: 2.5,
+                date: new Date().toLocaleDateString('es-ES'),
+                description: 'Imagen de muestra para edición',
+                edited: false
+            };
+            
+            const editorImg = document.getElementById('editorImageDisplay');
+            const placeholder = document.getElementById('editorImagePlaceholder');
+            
+            if (editorImg && placeholder) {
+                editorImg.src = sampleImage.url;
+                editorImg.style.display = 'block';
+                placeholder.style.display = 'none';
+                
+                // Guardar la imagen original
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    originalImageData = img;
+                };
+                img.src = sampleImage.url;
+            }
+            
+            currentImageIndex = null;
+            resetEditorState();
+            updateCanvasSize();
+        }
+
+        function loadImageFileIntoEditor(file) {
             const reader = new FileReader();
-            reader.onload = function(event) {
-                loadEditorImageFromSrc(event.target.result);
-                closeEditorImageUploadModal();
-            };
-            reader.readAsDataURL(file);
             
-            // Resetear input file
-            const fileInput = document.getElementById('editorFileInput');
-            fileInput.value = '';
-        }
-
-        function loadEditorSampleImage() {
-            // Crear una imagen de muestra (un gráfico SVG como ejemplo de evidencia)
-            const sampleImageSrc = `data:image/svg+xml;base64,${btoa(`
-                <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
-                    <rect width="800" height="600" fill="#1a3a5f"/>
-                    <rect x="100" y="100" width="600" height="400" fill="#0c1a2d" stroke="#4a9eff" stroke-width="3"/>
-                    <circle cx="400" cy="300" r="80" fill="#4a9eff" opacity="0.7"/>
-                    <line x1="150" y1="150" x2="650" y2="450" stroke="#ff6b6b" stroke-width="4"/>
-                    <line x1="650" y1="150" x2="150" y2="450" stroke="#ff6b6b" stroke-width="4"/>
-                    <text x="400" y="120" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="24">Evidencia Visual #2026-001</text>
-                    <text x="400" y="550" text-anchor="middle" fill="#a0c8ff" font-family="Arial" font-size="18">Archivo Jurídico Digital - Sistema de Gestión de Evidencias</text>
-                    <rect x="200" y="200" width="400" height="200" fill="none" stroke="#ffd166" stroke-width="2" stroke-dasharray="5,5"/>
-                    <text x="400" y="320" text-anchor="middle" fill="#ffd166" font-family="Arial" font-size="20">Área de interés</text>
-                    <line x1="400" y1="200" x2="400" y2="400" stroke="#ffffff" stroke-width="1" stroke-dasharray="3,3"/>
-                    <line x1="200" y1="300" x2="600" y2="300" stroke="#ffffff" stroke-width="1" stroke-dasharray="3,3"/>
-                </svg>
-            `)}`;
-            
-            loadEditorImageFromSrc(sampleImageSrc);
-            closeEditorImageUploadModal();
-        }
-
-        function loadEditorImageFromSrc(src) {
-            const img = new Image();
-            img.onload = function() {
-                const imageDisplay = document.getElementById('editorImageDisplay');
-                const imagePlaceholder = document.getElementById('editorImagePlaceholder');
+            reader.onload = function(e) {
+                const imageData = {
+                    id: 'temp',
+                    name: file.name,
+                    url: e.target.result,
+                    sizeMB: (file.size / (1024 * 1024)).toFixed(2),
+                    date: new Date().toLocaleDateString('es-ES'),
+                    description: 'Imagen cargada para edición',
+                    edited: false
+                };
                 
-                imageDisplay.src = src;
-                imageDisplay.style.display = 'block';
-                imagePlaceholder.style.display = 'none';
+                const editorImg = document.getElementById('editorImageDisplay');
+                const placeholder = document.getElementById('editorImagePlaceholder');
                 
-                // Restablecer valores
+                if (editorImg && placeholder) {
+                    editorImg.src = imageData.url;
+                    editorImg.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    
+                    // Guardar la imagen original
+                    const img = new Image();
+                    img.onload = function() {
+                        originalImageData = img;
+                    };
+                    img.src = imageData.url;
+                }
+                
+                currentImageIndex = null;
                 resetEditorState();
-                updateEditorImageTransform();
-                
-                showNotification('Imagen cargada correctamente en el editor', 'success');
+                updateCanvasSize();
             };
-            img.onerror = function() {
-                showNotification('Error al cargar la imagen', 'error');
-            };
-            img.src = src;
+            
+            reader.readAsDataURL(file);
         }
 
         function resetEditorState() {
             editorScale = 1;
-            editorImagePosition = { x: 0, y: 0 };
+            editorRotation = 0;
             editorBrightness = 100;
             editorContrast = 100;
+            editorImagePosition = { x: 0, y: 0 };
+            
+            if (drawingContext) {
+                drawingContext.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+            }
+            drawingElements = [];
+            if (textInput) {
+                textInput.style.display = 'none';
+                textInput.value = '';
+            }
             
             const brightnessSlider = document.getElementById('editorBrightnessSlider');
             const contrastSlider = document.getElementById('editorContrastSlider');
             const brightnessValue = document.getElementById('editorBrightnessValue');
             const contrastValue = document.getElementById('editorContrastValue');
+            const rotationValue = document.getElementById('editorRotationValue');
+            const zoomValue = document.getElementById('editorZoomValue');
             
-            if (brightnessSlider) brightnessSlider.value = 100;
-            if (contrastSlider) contrastSlider.value = 100;
-            if (brightnessValue) brightnessValue.textContent = '100%';
-            if (contrastValue) contrastValue.textContent = '100%';
+            if (brightnessSlider) brightnessSlider.value = editorBrightness;
+            if (contrastSlider) contrastSlider.value = editorContrast;
+            if (brightnessValue) brightnessValue.textContent = `${editorBrightness}%`;
+            if (contrastValue) contrastValue.textContent = `${editorContrast}%`;
+            if (rotationValue) rotationValue.textContent = `${editorRotation}°`;
+            if (zoomValue) zoomValue.textContent = `${Math.round(editorScale * 100)}%`;
             
-            setEditorActiveTool('select');
-            hideEditorCropOverlay();
-            
-            const zoomInfo = document.getElementById('editorZoomInfo');
-            if (zoomInfo) zoomInfo.style.display = 'none';
+            applyImageFilters();
         }
 
-        function handleEditorBackButton() {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (imageDisplay.style.display === 'block') {
-                if (confirm('¿Estás seguro de que quieres volver? Los cambios no guardados se perderán.')) {
-                    showPanel('dashboard');
-                }
-            } else {
-                showPanel('dashboard');
-            }
+        function updateBrightness(value) {
+            editorBrightness = parseInt(value);
+            document.getElementById('editorBrightnessValue').textContent = `${editorBrightness}%`;
+            applyImageFilters();
         }
 
-        function handleEditorSaveButton() {
-            const imageDisplay = document.getElementById('editorImageDisplay');
-            if (imageDisplay.style.display !== 'block') {
-                showNotification('No hay imagen para guardar', 'error');
-                return;
-            }
-            
-            // Si estamos en modo recorte, aplicar recorte primero
-            if (editorCurrentTool === 'crop') {
-                applyEditorCrop();
-                setTimeout(handleEditorSaveButton, 300);
-                return;
-            }
-            
-            // Crear canvas con la imagen editada
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Ajustar tamaño del canvas a la imagen original
-            canvas.width = imageDisplay.naturalWidth;
-            canvas.height = imageDisplay.naturalHeight;
-            
-            // Aplicar filtros al canvas
-            ctx.filter = `brightness(${editorBrightness}%) contrast(${editorContrast}%)`;
-            ctx.drawImage(imageDisplay, 0, 0);
-            
-            // Obtener URL de la imagen editada
-            const editedImageUrl = canvas.toDataURL('image/jpeg', 0.95);
-            
-            if (currentImageIndex !== null && images[currentImageIndex]) {
-                // Actualizar imagen existente
-                images[currentImageIndex].url = editedImageUrl;
-                images[currentImageIndex].edited = true;
-                images[currentImageIndex].editDate = new Date().toLocaleString('es-ES');
-                showNotification('✅ Imagen editada y actualizada correctamente', 'success');
-            } else {
-                // Agregar como nueva imagen
-                const newImage = {
-                    id: Date.now(),
-                    name: `editada_${Date.now()}.jpg`,
-                    url: editedImageUrl,
-                    sizeMB: 2.5,
-                    date: new Date().toLocaleDateString('es-ES'),
-                    edited: true,
-                    editDate: new Date().toLocaleString('es-ES')
-                };
-                images.push(newImage);
-                showNotification('✅ Nueva imagen guardada correctamente', 'success');
-            }
-            
-            // Actualizar estadísticas y galería
-            updateStats();
-            renderGallery();
-            
-            // Volver al dashboard después de 2 segundos
-            setTimeout(() => {
-                currentImageIndex = null;
-                showPanel('dashboard');
-            }, 2000);
+        function updateContrast(value) {
+            editorContrast = parseInt(value);
+            document.getElementById('editorContrastValue').textContent = `${editorContrast}%`;
+            applyImageFilters();
         }
 
-        // ========== FUNCIONES DEL SISTEMA EXISTENTE ==========
-        function deleteImage(index) {
-            if (confirm('¿Estás seguro de eliminar esta imagen? Esta acción no se puede deshacer.')) {
-                images.splice(index, 1);
-                renderGallery();
-                updateStats();
-                showNotification('Imagen eliminada correctamente', 'success');
-            }
-        }
-
-        function downloadImage(index) {
-            if (images[index]) {
-                const link = document.createElement('a');
-                link.href = images[index].url;
-                link.download = images[index].name;
-                link.click();
-                showNotification('Descargando imagen...', 'info');
-            }
-        }
-
-        function updateFileList() {
-            const fileInput = document.getElementById('fileInput');
-            const fileList = document.getElementById('fileList');
+        function applyImageFilters() {
+            const editorImg = document.getElementById('editorImageDisplay');
+            if (!editorImg || !editorImg.src) return;
             
-            if (!fileInput.files.length) {
-                fileList.innerHTML = '<p style="text-align: center; color: var(--gris-claro);">No hay archivos seleccionados</p>';
-                return;
-            }
-            
-            let html = '<h4 style="margin-bottom: 16px; color: var(--gris-oscuro);">Archivos seleccionados:</h4>';
-            let totalSize = 0;
-            
-            for (let file of fileInput.files) {
-                const sizeMB = (file.size / (1024 * 1024));
-                totalSize += file.size;
-                
-                html += `
-                    <div class="file-item">
-                        <i class="fas fa-image" style="font-size: 20px; color: var(--azul-medio);"></i>
-                        <div style="flex: 1;">
-                            <div style="font-weight: 500;">${file.name}</div>
-                            <div style="font-size: 12px; color: var(--gris-claro);">
-                                ${sizeMB.toFixed(2)} MB • ${file.type.split('/')[1].toUpperCase()}
-                            </div>
-                        </div>
-                        <button class="image-action-btn" onclick="removeFile(this)" style="width: 36px; height: 36px;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-            }
-            
-            const totalSizeMB = (totalSize / (1024 * 1024)).toFixed(2);
-            html += `
-                <div style="margin-top: 16px; padding: 12px; background: #f0f9ff; border-radius: 8px; font-size: 14px;">
-                    <strong>Total:</strong> ${fileInput.files.length} archivo(s) • ${totalSizeMB} MB
-                </div>
+            editorImg.style.filter = `
+                brightness(${editorBrightness}%) 
+                contrast(${editorContrast}%)
             `;
             
-            fileList.innerHTML = html;
-        }
-
-        function removeFile(button) {
-            const fileItem = button.closest('.file-item');
-            fileItem.remove();
-        }
-
-        function uploadFiles() {
-            const fileInput = document.getElementById('fileInput');
+            editorImg.style.transform = `
+                scale(${editorScale}) 
+                rotate(${editorRotation}deg)
+                translate(${editorImagePosition.x}px, ${editorImagePosition.y}px)
+            `;
             
-            if (!fileInput.files.length) {
-                showNotification('Por favor, selecciona al menos una imagen', 'error');
+            const zoomInfo = document.getElementById('editorZoomInfo');
+            const rotationInfo = document.getElementById('editorRotationInfo');
+            if (zoomInfo) zoomInfo.textContent = `Zoom: ${Math.round(editorScale * 100)}%`;
+            if (rotationInfo) rotationInfo.textContent = `Rotación: ${editorRotation}°`;
+        }
+
+        // Funciones de transformación CORREGIDAS
+        function rotateImageLeft() {
+            editorRotation -= 90;
+            if (editorRotation <= -360) editorRotation = 0;
+            const rotationValue = document.getElementById('editorRotationValue');
+            if (rotationValue) {
+                rotationValue.textContent = `${editorRotation}°`;
+            }
+            applyImageFilters();
+        }
+
+        function rotateImageRight() {
+            editorRotation += 90;
+            if (editorRotation >= 360) editorRotation = 0;
+            const rotationValue = document.getElementById('editorRotationValue');
+            if (rotationValue) {
+                rotationValue.textContent = `${editorRotation}°`;
+            }
+            applyImageFilters();
+        }
+
+        function rotateImage180() {
+            editorRotation += 180;
+            if (editorRotation >= 360) editorRotation -= 360;
+            const rotationValue = document.getElementById('editorRotationValue');
+            if (rotationValue) {
+                rotationValue.textContent = `${editorRotation}°`;
+            }
+            applyImageFilters();
+        }
+
+        function resetRotation() {
+            editorRotation = 0;
+            const rotationValue = document.getElementById('editorRotationValue');
+            if (rotationValue) {
+                rotationValue.textContent = `${editorRotation}°`;
+            }
+            applyImageFilters();
+        }
+
+        function zoomIn() {
+            editorScale = Math.min(editorScale + 0.1, 5);
+            const zoomValue = document.getElementById('editorZoomValue');
+            if (zoomValue) {
+                zoomValue.textContent = `${Math.round(editorScale * 100)}%`;
+            }
+            applyImageFilters();
+        }
+
+        function zoomOut() {
+            editorScale = Math.max(editorScale - 0.1, 0.1);
+            const zoomValue = document.getElementById('editorZoomValue');
+            if (zoomValue) {
+                zoomValue.textContent = `${Math.round(editorScale * 100)}%`;
+            }
+            applyImageFilters();
+        }
+
+        function zoomFit() {
+            const container = document.getElementById('editorImageContainer');
+            const img = document.getElementById('editorImageDisplay');
+            
+            if (!img || !img.src || !container) return;
+            
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+            
+            // Usar las dimensiones naturales de la imagen
+            img.onload = function() {
+                const imgWidth = this.naturalWidth;
+                const imgHeight = this.naturalHeight;
+                
+                const scaleX = containerWidth / imgWidth;
+                const scaleY = containerHeight / imgHeight;
+                
+                editorScale = Math.min(scaleX, scaleY) * 0.9;
+                editorImagePosition = { x: 0, y: 0 };
+                
+                const zoomValue = document.getElementById('editorZoomValue');
+                if (zoomValue) {
+                    zoomValue.textContent = `${Math.round(editorScale * 100)}%`;
+                }
+                applyImageFilters();
+            };
+            
+            // Si la imagen ya está cargada
+            if (img.complete) {
+                const imgWidth = img.naturalWidth;
+                const imgHeight = img.naturalHeight;
+                
+                const scaleX = containerWidth / imgWidth;
+                const scaleY = containerHeight / imgHeight;
+                
+                editorScale = Math.min(scaleX, scaleY) * 0.9;
+                editorImagePosition = { x: 0, y: 0 };
+                
+                const zoomValue = document.getElementById('editorZoomValue');
+                if (zoomValue) {
+                    zoomValue.textContent = `${Math.round(editorScale * 100)}%`;
+                }
+                applyImageFilters();
+            }
+        }
+
+        function resetZoom() {
+            editorScale = 1;
+            editorImagePosition = { x: 0, y: 0 };
+            const zoomValue = document.getElementById('editorZoomValue');
+            if (zoomValue) {
+                zoomValue.textContent = `${Math.round(editorScale * 100)}%`;
+            }
+            applyImageFilters();
+        }
+
+        async function saveEditedImage() {
+            const editorImg = document.getElementById('editorImageDisplay');
+            if (!editorImg || !editorImg.src || editorImg.src === '') {
+                showNotification('No hay imagen para guardar', 'warning');
                 return;
             }
             
-            // Simular subida
-            showNotification(`Subiendo ${fileInput.files.length} imagen(es)...`, 'info');
-            
-            // Crear URLs para las imágenes
-            const newImages = [];
-            for (let i = 0; i < fileInput.files.length; i++) {
-                const file = fileInput.files[i];
-                const imageUrl = URL.createObjectURL(file);
+            try {
+                showNotification('Procesando imagen...', 'info');
                 
-                newImages.push({
-                    id: Date.now() + i,
-                    name: file.name,
-                    url: imageUrl,
-                    sizeMB: file.size / (1024 * 1024),
-                    date: new Date().toLocaleDateString('es-ES'),
-                    uploaded: true
-                });
-            }
-            
-            // Agregar a la lista después de un delay
-            setTimeout(() => {
-                images = images.concat(newImages);
-                showNotification(`¡${newImages.length} imagen(es) subida(s) correctamente!`, 'success');
+                // Crear un canvas para procesar la imagen
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
                 
-                // Limpiar y volver al dashboard
-                fileInput.value = '';
-                document.getElementById('fileList').innerHTML = '';
+                // Si tenemos la imagen original, usarla
+                if (originalImageData) {
+                    await processImageWithOriginal(tempCanvas, tempCtx);
+                } else {
+                    await processImageFromDisplay(tempCanvas, tempCtx);
+                }
                 
-                // Actualizar vista
-                updateStats();
-                renderGallery();
+                // Obtener la imagen como data URL
+                const editedImageUrl = tempCanvas.toDataURL('image/jpeg', 0.9);
+                const sizeMB = (editedImageUrl.length * 3 / (4 * 1024 * 1024)).toFixed(2);
+                
+                if (currentImageIndex !== null && currentImageIndex >= 0) {
+                    const originalImage = images[currentImageIndex];
+                    const updates = {
+                        url: editedImageUrl,
+                        edited: true,
+                        editDate: new Date().toLocaleString('es-ES'),
+                        sizeMB: parseFloat(sizeMB)
+                    };
+                    
+                    await updateImageInDB(originalImage.id, updates);
+                    showNotification('Imagen editada y guardada correctamente', 'success');
+                } else {
+                    const imageData = {
+                        name: `imagen-editada-${Date.now()}.jpg`,
+                        url: editedImageUrl,
+                        sizeMB: parseFloat(sizeMB),
+                        date: new Date().toLocaleDateString('es-ES'),
+                        description: 'Imagen editada y guardada desde el editor',
+                        edited: true,
+                        editDate: new Date().toLocaleString('es-ES'),
+                        tags: ['editada']
+                    };
+                    
+                    await saveImageToDB(imageData);
+                    showNotification('Imagen guardada correctamente', 'success');
+                }
+                
+                await updateStats();
+                await loadGalleryPage(1);
                 showPanel('dashboard');
                 
-            }, 1500);
+            } catch (error) {
+                console.error('Error al guardar la imagen editada:', error);
+                showNotification('Error al guardar la imagen', 'error');
+            }
         }
 
-        function searchImages() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            showNotification(`Buscando: ${searchTerm || 'todas las imágenes'}`, 'info');
-        }
-
-        function loadAdminData() {
-            // Los datos ya están actualizados por updateStats()
-        }
-
-        // ========== DATOS DE EJEMPLO ==========
-        function loadSampleData() {
-            // Agregar algunas imágenes de ejemplo
-            images = [
-                {
-                    id: 1,
-                    name: 'evidencia-001.jpg',
-                    url: 'https://via.placeholder.com/400x300/1e3a8a/ffffff?text=Evidencia+1',
-                    sizeMB: 2.5,
-                    date: '15/03/2024',
-                    description: 'Evidencia de caso #001'
-                },
-                {
-                    id: 2,
-                    name: 'documento-fiscal.png',
-                    url: 'https://via.placeholder.com/400x300/2563eb/ffffff?text=Documento+Fiscal',
-                    sizeMB: 1.8,
-                    date: '14/03/2024',
-                    description: 'Documento fiscal adjunto'
-                },
-                {
-                    id: 3,
-                    name: 'fotografia-prueba.jpg',
-                    url: 'https://via.placeholder.com/400x300/3b82f6/ffffff?text=Foto+Prueba',
-                    sizeMB: 3.2,
-                    date: '13/03/2024',
-                    description: 'Fotografía de prueba del caso'
+        async function processImageWithOriginal(tempCanvas, tempCtx) {
+            return new Promise((resolve) => {
+                // Usar la imagen original
+                tempCanvas.width = originalImageData.width;
+                tempCanvas.height = originalImageData.height;
+                
+                // Aplicar brillo y contraste manualmente
+                tempCtx.filter = `brightness(${editorBrightness}%) contrast(${editorContrast}%)`;
+                tempCtx.drawImage(originalImageData, 0, 0);
+                
+                // Aplicar rotación
+                if (editorRotation !== 0) {
+                    const rotatedCanvas = document.createElement('canvas');
+                    const rotatedCtx = rotatedCanvas.getContext('2d');
+                    
+                    // Calcular dimensiones después de rotación
+                    const radians = (editorRotation * Math.PI) / 180;
+                    const cos = Math.abs(Math.cos(radians));
+                    const sin = Math.abs(Math.sin(radians));
+                    rotatedCanvas.width = originalImageData.width * cos + originalImageData.height * sin;
+                    rotatedCanvas.height = originalImageData.width * sin + originalImageData.height * cos;
+                    
+                    // Rotar
+                    rotatedCtx.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+                    rotatedCtx.rotate(radians);
+                    rotatedCtx.drawImage(tempCanvas, -originalImageData.width / 2, -originalImageData.height / 2);
+                    
+                    // Usar el canvas rotado como base
+                    tempCanvas.width = rotatedCanvas.width;
+                    tempCanvas.height = rotatedCanvas.height;
+                    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                    tempCtx.drawImage(rotatedCanvas, 0, 0);
                 }
-            ];
+                
+                // Aplicar zoom (escala)
+                if (editorScale !== 1) {
+                    const scaledCanvas = document.createElement('canvas');
+                    const scaledCtx = scaledCanvas.getContext('2d');
+                    scaledCanvas.width = tempCanvas.width * editorScale;
+                    scaledCanvas.height = tempCanvas.height * editorScale;
+                    scaledCtx.scale(editorScale, editorScale);
+                    scaledCtx.drawImage(tempCanvas, 0, 0);
+                    
+                    tempCanvas.width = scaledCanvas.width;
+                    tempCanvas.height = scaledCanvas.height;
+                    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                    tempCtx.drawImage(scaledCanvas, 0, 0);
+                }
+                
+                // Dibujar elementos del canvas (líneas y texto)
+                if (drawingElements.length > 0) {
+                    // Calcular factor de escala entre el canvas de dibujo y el canvas temporal
+                    const drawingRect = drawingCanvas.getBoundingClientRect();
+                    const scaleX = tempCanvas.width / drawingRect.width;
+                    const scaleY = tempCanvas.height / drawingRect.height;
+                    
+                    // Dibujar todos los elementos
+                    drawingElements.forEach(el => {
+                        if (el.type === 'path') {
+                            tempCtx.beginPath();
+                            tempCtx.strokeStyle = el.color;
+                            tempCtx.lineWidth = el.width * Math.min(scaleX, scaleY);
+                            tempCtx.lineJoin = 'round';
+                            tempCtx.lineCap = 'round';
+                            
+                            if (el.points.length > 0) {
+                                tempCtx.moveTo(el.points[0][0] * scaleX, el.points[0][1] * scaleY);
+                                for (let i = 1; i < el.points.length; i++) {
+                                    tempCtx.lineTo(el.points[i][0] * scaleX, el.points[i][1] * scaleY);
+                                }
+                                tempCtx.stroke();
+                            }
+                        } else if (el.type === 'text') {
+                            const fontSize = el.fontSize * Math.min(scaleX, scaleY);
+                            tempCtx.font = `${fontSize}px ${el.fontFamily}`;
+                            tempCtx.fillStyle = el.color;
+                            tempCtx.fillText(el.text, el.x * scaleX, (el.y + el.fontSize) * scaleY);
+                        }
+                    });
+                }
+                
+                resolve();
+            });
+        }
+
+        async function processImageFromDisplay(tempCanvas, tempCtx) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = function() {
+                    tempCanvas.width = this.width;
+                    tempCanvas.height = this.height;
+                    
+                    // Aplicar filtros
+                    tempCtx.filter = `brightness(${editorBrightness}%) contrast(${editorContrast}%)`;
+                    tempCtx.drawImage(this, 0, 0);
+                    
+                    // Aplicar rotación
+                    if (editorRotation !== 0) {
+                        const rotatedCanvas = document.createElement('canvas');
+                        const rotatedCtx = rotatedCanvas.getContext('2d');
+                        
+                        const radians = (editorRotation * Math.PI) / 180;
+                        const cos = Math.abs(Math.cos(radians));
+                        const sin = Math.abs(Math.sin(radians));
+                        rotatedCanvas.width = this.width * cos + this.height * sin;
+                        rotatedCanvas.height = this.width * sin + this.height * cos;
+                        
+                        rotatedCtx.translate(rotatedCanvas.width / 2, rotatedCanvas.height / 2);
+                        rotatedCtx.rotate(radians);
+                        rotatedCtx.drawImage(tempCanvas, -this.width / 2, -this.height / 2);
+                        
+                        tempCanvas.width = rotatedCanvas.width;
+                        tempCanvas.height = rotatedCanvas.height;
+                        tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                        tempCtx.drawImage(rotatedCanvas, 0, 0);
+                    }
+                    
+                    // Aplicar zoom
+                    if (editorScale !== 1) {
+                        const scaledCanvas = document.createElement('canvas');
+                        const scaledCtx = scaledCanvas.getContext('2d');
+                        scaledCanvas.width = tempCanvas.width * editorScale;
+                        scaledCanvas.height = tempCanvas.height * editorScale;
+                        scaledCtx.scale(editorScale, editorScale);
+                        scaledCtx.drawImage(tempCanvas, 0, 0);
+                        
+                        tempCanvas.width = scaledCanvas.width;
+                        tempCanvas.height = scaledCanvas.height;
+                        tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                        tempCtx.drawImage(scaledCanvas, 0, 0);
+                    }
+                    
+                    // Dibujar elementos
+                    if (drawingElements.length > 0) {
+                        const drawingRect = drawingCanvas.getBoundingClientRect();
+                        const scaleX = tempCanvas.width / drawingRect.width;
+                        const scaleY = tempCanvas.height / drawingRect.height;
+                        
+                        drawingElements.forEach(el => {
+                            if (el.type === 'path') {
+                                tempCtx.beginPath();
+                                tempCtx.strokeStyle = el.color;
+                                tempCtx.lineWidth = el.width * Math.min(scaleX, scaleY);
+                                tempCtx.lineJoin = 'round';
+                                tempCtx.lineCap = 'round';
+                                
+                                if (el.points.length > 0) {
+                                    tempCtx.moveTo(el.points[0][0] * scaleX, el.points[0][1] * scaleY);
+                                    for (let i = 1; i < el.points.length; i++) {
+                                        tempCtx.lineTo(el.points[i][0] * scaleX, el.points[i][1] * scaleY);
+                                    }
+                                    tempCtx.stroke();
+                                }
+                            } else if (el.type === 'text') {
+                                const fontSize = el.fontSize * Math.min(scaleX, scaleY);
+                                tempCtx.font = `${fontSize}px ${el.fontFamily}`;
+                                tempCtx.fillStyle = el.color;
+                                tempCtx.fillText(el.text, el.x * scaleX, (el.y + el.fontSize) * scaleY);
+                            }
+                        });
+                    }
+                    
+                    resolve();
+                };
+                img.src = document.getElementById('editorImageDisplay').src;
+            });
+        }
+
+        // ========== ADMINISTRACIÓN ==========
+        async function loadAdminData() {
+            try {
+                const stats = await getStorageStats();
+                const lastUpdate = await getLastUpdate();
+                
+                const adminTotalImages = document.getElementById('adminTotalImages');
+                const adminStorage = document.getElementById('adminStorage');
+                const adminEdited = document.getElementById('adminEdited');
+                const adminActiveUsers = document.getElementById('adminActiveUsers');
+                const imagesPerPageEl = document.getElementById('imagesPerPage');
+                const lastUpdateEl = document.getElementById('lastUpdate');
+                
+                if (adminTotalImages) adminTotalImages.textContent = stats.totalImages;
+                if (adminStorage) adminStorage.textContent = stats.totalSize.toFixed(1);
+                if (adminEdited) adminEdited.textContent = stats.editedImages;
+                if (adminActiveUsers) adminActiveUsers.textContent = '1';
+                if (imagesPerPageEl) imagesPerPageEl.textContent = imagesPerPage;
+                if (lastUpdateEl) lastUpdateEl.textContent = lastUpdate || 'Nunca';
+                
+            } catch (error) {
+                console.error('Error al cargar datos administrativos:', error);
+            }
+        }
+
+        async function loadActivityLog() {
+            try {
+                if (!db) return;
+                
+                const transaction = db.transaction([ACTIVITY_STORE], 'readonly');
+                const store = transaction.objectStore(ACTIVITY_STORE);
+                const index = store.index('date');
+                const request = index.openCursor(null, 'prev');
+                
+                const activities = [];
+                
+                request.onsuccess = function(event) {
+                    const cursor = event.target.result;
+                    if (cursor && activities.length < 50) {
+                        activities.push(cursor.value);
+                        cursor.continue();
+                    } else {
+                        displayActivityLog(activities);
+                    }
+                };
+                
+                request.onerror = function(error) {
+                    console.error('Error al cargar historial de actividad:', error);
+                    const activityLog = document.getElementById('activityLog');
+                    if (activityLog) {
+                        activityLog.innerHTML = `
+                            <div style="text-align: center; padding: 40px;">
+                                <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #d1d5db; margin-bottom: 16px;"></i>
+                                <p style="color: var(--gris-claro);">Error al cargar el historial</p>
+                            </div>
+                        `;
+                    }
+                };
+                
+            } catch (error) {
+                console.error('Error en loadActivityLog:', error);
+            }
+        }
+
+        function displayActivityLog(activities) {
+            const activityLog = document.getElementById('activityLog');
+            if (!activityLog) return;
+            
+            if (!activities || activities.length === 0) {
+                activityLog.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-history" style="font-size: 48px; color: #d1d5db; margin-bottom: 16px;"></i>
+                        <p style="color: var(--gris-claro);">No hay actividad registrada</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<h4 style="margin-bottom: 16px; color: var(--gris-oscuro);">Actividad Reciente:</h4>';
+            
+            activities.forEach(activity => {
+                const date = new Date(activity.date).toLocaleString('es-ES');
+                const typeIcon = getActivityIcon(activity.type);
+                const typeColor = getActivityColor(activity.type);
+                
+                html += `
+                    <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-bottom: 1px solid #e5e7eb;">
+                        <div style="color: ${typeColor}; font-size: 20px; min-width: 24px;">
+                            ${typeIcon}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 500; margin-bottom: 4px;">
+                                ${activity.description}
+                            </div>
+                            <div style="font-size: 12px; color: var(--gris-claro); display: flex; justify-content: space-between;">
+                                <span>${activity.user || 'system'}</span>
+                                <span>${date}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            activityLog.innerHTML = html;
+        }
+
+        function getActivityIcon(type) {
+            switch(type) {
+                case 'upload': return '<i class="fas fa-cloud-upload-alt"></i>';
+                case 'edit': return '<i class="fas fa-edit"></i>';
+                case 'delete': return '<i class="fas fa-trash"></i>';
+                case 'login': return '<i class="fas fa-sign-in-alt"></i>';
+                case 'logout': return '<i class="fas fa-sign-out-alt"></i>';
+                case 'system': return '<i class="fas fa-cog"></i>';
+                default: return '<i class="fas fa-info-circle"></i>';
+            }
+        }
+
+        function getActivityColor(type) {
+            switch(type) {
+                case 'upload': return '#4a9eff';
+                case 'edit': return '#10b981';
+                case 'delete': return '#ef4444';
+                case 'login': return '#8b5cf6';
+                case 'logout': return '#f59e0b';
+                case 'system': return '#6b7280';
+                default: return '#6b7280';
+            }
+        }
+
+        // ========== FUNCIONES DE ADMINISTRACIÓN ==========
+        function backupDatabase() {
+            showNotification('Función de respaldo en desarrollo', 'info');
+        }
+
+        function optimizeDatabase() {
+            showNotification('Base de datos optimizada', 'success');
+            logActivity('system', 'Base de datos optimizada');
+        }
+
+        function clearAllImages() {
+            showConfirmModal(
+                'Eliminar Todas las Imágenes',
+                '¿Estás seguro de eliminar TODAS las imágenes? Esta acción no se puede deshacer.',
+                'clearAllImagesConfirmed'
+            );
+        }
+
+        async function clearAllImagesConfirmed() {
+            try {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.clear();
+                
+                request.onsuccess = async function() {
+                    showNotification('Todas las imágenes han sido eliminadas', 'success');
+                    await updateStats();
+                    await loadGalleryPage(1);
+                    await logActivity('system', 'Todas las imágenes eliminadas');
+                };
+            } catch (error) {
+                console.error('Error al eliminar imágenes:', error);
+                showNotification('Error al eliminar imágenes', 'error');
+            }
+        }
+
+        function exportDatabase() {
+            showNotification('Función de exportación en desarrollo', 'info');
+        }
+
+        function importDatabase() {
+            showNotification('Función de importación en desarrollo', 'info');
         }
 
         // ========== UTILIDADES ==========
+        async function getStorageStats() {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject('Base de datos no inicializada');
+                    return;
+                }
+                
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.openCursor();
+                let totalSize = 0;
+                let totalImages = 0;
+                let editedImages = 0;
+                
+                request.onsuccess = function(event) {
+                    const cursor = event.target.result;
+                    
+                    if (cursor) {
+                        const image = cursor.value;
+                        totalSize += image.sizeMB || 0;
+                        totalImages++;
+                        if (image.edited) editedImages++;
+                        cursor.continue();
+                    } else {
+                        resolve({
+                            totalSize: totalSize,
+                            totalImages: totalImages,
+                            editedImages: editedImages
+                        });
+                    }
+                };
+                
+                request.onerror = reject;
+            });
+        }
+
+        async function getTotalImageCount() {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject('Base de datos no inicializada');
+                    return;
+                }
+                
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.count();
+                
+                request.onsuccess = function() {
+                    resolve(request.result);
+                };
+                
+                request.onerror = reject;
+            });
+        }
+
+        async function updateStats() {
+            try {
+                const stats = await getStorageStats();
+                
+                const totalImagesEl = document.getElementById('totalImages');
+                const totalSizeEl = document.getElementById('totalSize');
+                const editedImagesEl = document.getElementById('editedImages');
+                const activeUsersEl = document.getElementById('activeUsers');
+                const storageUsedEl = document.getElementById('storageUsed');
+                const storageTotalEl = document.getElementById('storageTotal');
+                const storagePercentEl = document.getElementById('storagePercent');
+                const storageFillEl = document.getElementById('storageFill');
+                
+                if (totalImagesEl) totalImagesEl.textContent = stats.totalImages;
+                if (totalSizeEl) totalSizeEl.textContent = stats.totalSize.toFixed(1);
+                if (editedImagesEl) editedImagesEl.textContent = stats.editedImages;
+                if (activeUsersEl) activeUsersEl.textContent = '1';
+                
+                const storagePercent = (stats.totalSize / MAX_STORAGE_MB) * 100;
+                if (storageUsedEl) storageUsedEl.textContent = stats.totalSize.toFixed(1);
+                if (storageTotalEl) storageTotalEl.textContent = MAX_STORAGE_MB;
+                if (storagePercentEl) storagePercentEl.textContent = storagePercent.toFixed(1);
+                if (storageFillEl) storageFillEl.style.width = `${Math.min(storagePercent, 100)}%`;
+                
+            } catch (error) {
+                console.error('Error al actualizar estadísticas:', error);
+            }
+        }
+
+        async function logActivity(type, description) {
+            if (!db) return;
+            
+            const activity = {
+                date: new Date().toISOString(),
+                type: type,
+                description: description,
+                user: currentUser ? currentUser.username : 'system'
+            };
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([ACTIVITY_STORE], 'readwrite');
+                const store = transaction.objectStore(ACTIVITY_STORE);
+                const request = store.add(activity);
+                
+                request.onsuccess = resolve;
+                request.onerror = reject;
+            });
+        }
+
+        async function updateLastUpdate() {
+            if (!db) return;
+            
+            const stats = {
+                id: 'lastUpdate',
+                key: 'lastUpdate',
+                value: new Date().toLocaleString('es-ES'),
+                timestamp: Date.now()
+            };
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STATS_STORE], 'readwrite');
+                const store = transaction.objectStore(STATS_STORE);
+                const request = store.put(stats);
+                
+                request.onsuccess = resolve;
+                request.onerror = reject;
+            });
+        }
+
+        async function getLastUpdate() {
+            if (!db) return null;
+            
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STATS_STORE], 'readonly');
+                const store = transaction.objectStore(STATS_STORE);
+                const request = store.get('lastUpdate');
+                
+                request.onsuccess = function() {
+                    resolve(request.result ? request.result.value : null);
+                };
+                
+                request.onerror = reject;
+            });
+        }
+
         function showNotification(message, type = 'info') {
             const notification = document.getElementById('notification');
+            if (!notification) return;
             
-            // Configurar color según tipo
             const colors = {
-                success: '#4a9eff',
-                error: '#ff6b6b',
+                success: '#10b981',
+                error: '#ef4444',
                 info: '#4a9eff',
-                warning: '#ffd166'
+                warning: '#f59e0b'
             };
             
             notification.textContent = message;
@@ -2531,16 +4693,104 @@
             }, 4000);
         }
 
-        function showError(message) {
-            showNotification(message, 'error');
+        function logout() {
+            showConfirmModal(
+                'Cerrar sesión',
+                '¿Estás seguro de que deseas cerrar sesión?',
+                'logoutConfirmed'
+            );
         }
 
-        // Mostrar dashboard al cargar
-        window.onload = function() {
-            if (document.getElementById('loginScreen')) {
-                document.getElementById('loginScreen').style.display = 'flex';
+        function logoutConfirmed() {
+            logActivity('logout', 'Usuario cerró sesión');
+            
+            currentUser = null;
+            const loginScreen = document.getElementById('loginScreen');
+            const mainScreen = document.getElementById('mainScreen');
+            if (loginScreen) loginScreen.style.display = 'flex';
+            if (mainScreen) mainScreen.style.display = 'none';
+            
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) loginForm.reset();
+            
+            showNotification('Sesión cerrada correctamente', 'info');
+        }
+
+        function showConfirmModal(title, message, action, params = null) {
+            const modalTitle = document.getElementById('confirmModalTitle');
+            const modalMessage = document.getElementById('confirmModalMessage');
+            const modal = document.getElementById('confirmModal');
+            
+            if (!modalTitle || !modalMessage || !modal) return;
+            
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            
+            pendingAction = action;
+            pendingActionParams = params;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeConfirmModal() {
+            const modal = document.getElementById('confirmModal');
+            if (modal) {
+                modal.style.display = 'none';
             }
-        };
+            pendingAction = null;
+            pendingActionParams = null;
+        }
+
+        function executeConfirmedAction() {
+            if (pendingAction) {
+                const actionFunc = window[pendingAction];
+                if (typeof actionFunc === 'function') {
+                    actionFunc(pendingActionParams);
+                }
+            }
+            closeConfirmModal();
+        }
+
+        // ========== FUNCIONES GLOBALES ==========
+        window.deleteImageConfirmed = deleteImageConfirmed;
+        window.clearAllImagesConfirmed = clearAllImagesConfirmed;
+        window.logoutConfirmed = logoutConfirmed;
+        window.showPanel = showPanel;
+        window.filterImages = filterImages;
+        window.searchImages = searchImages;
+        window.debounceSearch = debounceSearch;
+        window.changePage = changePage;
+        window.clearFileList = clearFileList;
+        window.uploadFiles = uploadFiles;
+        window.removeFile = removeFile;
+        window.rotateImageLeft = rotateImageLeft;
+        window.rotateImageRight = rotateImageRight;
+        window.rotateImage180 = rotateImage180;
+        window.resetRotation = resetRotation;
+        window.zoomIn = zoomIn;
+        window.zoomOut = zoomOut;
+        window.zoomFit = zoomFit;
+        window.resetZoom = resetZoom;
+        window.applyCrop = applyCrop;
+        window.changeLineColor = changeLineColor;
+        window.changeLineWidth = changeLineWidth;
+        window.changeTextColor = changeTextColor;
+        window.changeFontSize = changeFontSize;
+        window.clearDrawing = clearDrawing;
+        window.clearText = clearText;
+        window.backupDatabase = backupDatabase;
+        window.optimizeDatabase = optimizeDatabase;
+        window.clearAllImages = clearAllImages;
+        window.exportDatabase = exportDatabase;
+        window.importDatabase = importDatabase;
+        window.logout = logout;
+        window.closeConfirmModal = closeConfirmModal;
+        window.executeConfirmedAction = executeConfirmedAction;
+        window.updateBrightness = updateBrightness;
+        window.updateContrast = updateContrast;
+        
+        // CORREGIDO: Se agregó esta línea para hacer la función globalmente accesible
+        window.saveEditedImage = saveEditedImage;
     </script>
 </body>
 </html>
